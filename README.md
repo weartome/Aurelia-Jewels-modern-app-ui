@@ -128,30 +128,75 @@ For a client-ready installation checklist and WhatsApp message template, see [`d
 
 ---
 
-## Local Development & CLI Build
+## Prerequisites for Android Development
 
-### Prerequisites
+Before cloning or building the project locally, make sure your machine has:
 
-- **JDK 21** (Temurin / OpenJDK)
-- **Android SDK** with `compileSdk 36` (`minorApiLevel = 1`) and `minSdk 24`
-- **Gradle 9.3.1** (or Android Studio Meerkat / Narwhal+ with AGP 9.1.1 support)
+- **Android Studio**: Meerkat / Narwhal or newer (supporting **AGP 9.1.1** and **Gradle 9.3.1**)
+- **Java Development Kit (JDK)**: **JDK 21** (Temurin / OpenJDK 21 recommended)
+- **Android SDK Components** (installable via Android Studio -> **Settings -> Languages & Frameworks -> Android SDK**):
+  - Android SDK Platform **API 36** (`compileSdk 36`, `minorApiLevel = 1`)
+  - Android SDK Build-Tools **36.x**
+  - Android SDK Platform-Tools
+- **Git**: Installed and configured for cloning the repository
+- **Test Target**: Either an Android Virtual Device (AVD, API 24+) or a physical Android phone running Android 7.0 (API 24) or higher with **USB Debugging** enabled
 
-### Keystore Setup (Required for Local Debug Builds)
+---
 
-`app/build.gradle.kts` signs debug builds with `${rootDir}/debug.keystore`, which is gitignored while `debug.keystore.base64` is checked into the repository. Before building locally, decode it once from the project root:
+## Cloning and Setting Up the Project in Android Studio
+
+Follow these steps to open and configure **Aurelia Jewels** in Android Studio:
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/<your-username>/<your-repo-name>.git
+   cd <your-repo-name>
+   ```
+
+2. **Restore the Debug Keystore (Required Once)**
+   `app/build.gradle.kts` signs debug builds using `${rootDir}/debug.keystore`. That binary file is excluded by `.gitignore`, while `debug.keystore.base64` is tracked in the repository. Run one of the commands below in the project root:
+   ```bash
+   # macOS / Linux / Git Bash
+   base64 -d debug.keystore.base64 > debug.keystore
+
+   # Windows PowerShell
+   [IO.File]::WriteAllBytes("debug.keystore", [Convert]::FromBase64String((Get-Content -Raw "debug.keystore.base64")))
+   ```
+
+3. **Optional Environment File (`.env`)**
+   The Secrets Gradle Plugin reads `.env` and automatically falls back to `.env.example`, so no API key is required to run the app. If you add custom third-party keys later, copy `.env.example` to `.env` (already ignored in `.gitignore`).
+
+4. **Open in Android Studio**
+   - Launch Android Studio and select **Open**.
+   - Choose the cloned root directory (containing `settings.gradle.kts`).
+   - Verify the Gradle JDK is set to **JDK 21** (**Settings -> Build, Execution, Deployment -> Build Tools -> Gradle -> Gradle JDK**).
+   - Wait for **Gradle Sync** to finish downloading dependencies (Jetpack Compose, Room, KSP, Coil, Navigation Compose).
+
+5. **Run on Device or Emulator**
+   - Connect an Android phone via USB (or start an AVD), select the `app` run configuration, and click **Run** (`Shift + F10` / `Ctrl + R`).
+
+---
+
+## Building and Generating the APK (Build Menu & CLI)
+
+### Method 1: Android Studio Build Menu (Recommended for GUI Users)
+
+1. Wait until Gradle Sync completes with zero errors.
+2. In the top menu bar, click **Build -> Build Bundle(s) / APK(s) -> Build APK(s)**.
+3. Wait 1-3 minutes while Gradle compiles Kotlin sources, runs KSP for Room, and packages resources.
+4. When the **"APK(s) generated successfully"** notification appears at the bottom-right corner, click **locate**.
+5. Android Studio will open the output folder containing your installable APK:
+   ```text
+   app/build/outputs/apk/debug/app-debug.apk
+   ```
+6. Copy `app-debug.apk` to your Android phone (via USB cable, Google Drive, or WhatsApp as a **Document**), tap it on your phone, allow **Install unknown apps** if prompted, and tap **Install**.
+
+> *Note: Always distribute `.apk` for direct phone installation. `.aab` (Android App Bundle) files are only for Google Play Console uploads and cannot be installed directly on Android phones.*
+
+### Method 2: Command Line (Gradle CLI)
 
 ```bash
-# macOS / Linux / Git Bash
-base64 -d debug.keystore.base64 > debug.keystore
-
-# Windows PowerShell
-[IO.File]::WriteAllBytes("debug.keystore", [Convert]::FromBase64String((Get-Content -Raw "debug.keystore.base64")))
-```
-
-### Build & Run Unit Tests
-
-```bash
-# Run unit tests (INR formatter, coupons, checkout validation, grid filters)
+# Run JVM unit tests (INR formatter, coupons, checkout validation, grid filters)
 gradle :app:testDebugUnitTest
 
 # Assemble installable Debug APK
@@ -163,6 +208,42 @@ Output APK location:
 ```text
 app/build/outputs/apk/debug/app-debug.apk
 ```
+
+---
+
+## Connecting Firebase in the Future (Optional)
+
+Currently, **Aurelia Jewels** runs 100% offline using local **Room SQLite** storage (`aurelia_jewels_demo.db`) and a placeholder implementation (`PlaceholderAiImageRepository`) for the Bespoke AI Concept Studio. If you decide to enable cloud sync (Firestore), user login (Firebase Auth), or live Gemini image generation (Firebase AI Logic) later, follow these steps:
+
+1. **Create a Firebase Project**
+   - Open the [Firebase Console](https://console.firebase.google.com/) and create a new project.
+   - Click **Add app -> Android**.
+   - Enter the exact package name from `app/build.gradle.kts`:
+     ```text
+     com.aistudio.aureliajewels.kxmprq
+     ```
+   - *(Required for Google Sign-In & App Check)* Add your debug/release **SHA-1** and **SHA-256** signing fingerprints (viewable via `keytool -list -v -keystore debug.keystore -alias androiddebugkey -storepass android`).
+
+2. **Add `google-services.json`**
+   - Download `google-services.json` from Firebase Console and place it inside the `app/` directory (`app/google-services.json`).
+   - The `com.google.gms.google-services` plugin is already declared in `app/build.gradle.kts` and configured to pass through safely when absent.
+
+3. **Uncomment Pre-Configured Firebase Dependencies**
+   Open `app/build.gradle.kts` and uncomment only the modules you need from the existing catalog entries:
+   - **Core BoM (required for all Firebase libraries):** `implementation(platform(libs.firebase.bom))`
+   - **Firebase AI Logic (live `gemini-3-pro-image-preview` image generation):** `implementation(libs.firebase.ai)` plus `libs.firebase.appcheck.debug` / `libs.firebase.appcheck.recaptcha`
+   - **Cloud Firestore (multi-device sync):** `implementation(libs.firebase.firestore)`
+   - **Google Sign-In via Credential Manager:** uncomment `libs.firebase.auth`, `libs.androidx.credentials`, `libs.androidx.credentials.play.services`, and `libs.googleid` together
+
+4. **Swap the AI Repository Implementation**
+   - Replace `PlaceholderAiImageRepository` in `app/src/main/java/com/example/data/AiImageRepository.kt` with a `Firebase.ai.generativeModel(...)` implementation targeting `gemini-3-pro-image-preview`.
+   - Enable **Firebase AI Logic** and **App Check** in the Firebase Console before testing on device.
+   - *(If using Google AI Studio)* You can also provision Firebase directly from AI Studio without manually downloading `google-services.json`.
+
+5. **Security Best Practices**
+   - Never hardcode API keys or server secrets in Kotlin source files.
+   - Configure strict Firestore Security Rules before storing real customer orders or addresses.
+   - Keep `.env` and private release keystores (`.jks`) out of version control (already enforced by `.gitignore`).
 
 ---
 

@@ -1,18 +1,66 @@
-*.iml
+# Built application files
+*.apk
+*.aar
+*.ap_
+*.aab
+
+# Files for the ART/Dalvik VM
+*.dex
+
+# Java class files
+*.class
+
+# Generated files
+bin/
+gen/
+out/
+/build
+app/build/
+release-apk/
+
+# Gradle files
+.gradle/
 .gradle
+.kotlin/
 .kotlin
+gradle-app.setting
+!gradle-wrapper.jar
+
+# Local configuration & secrets (never push to GitHub)
 /local.properties
+local.properties
+.env
+.env.local
+.env.*.local
+*.jks
+*.keystore
+debug.keystore
+!debug.keystore.base64
+# Uncomment the line below if you add Firebase locally and prefer keeping config private:
+# app/google-services.json
+
+# IntelliJ / Android Studio IDE files
+*.iml
+.idea/
 /.idea/caches
 /.idea/libraries
 /.idea/modules.xml
 /.idea/workspace.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
-.DS_Store
-/build
+
+# Android Profiling & Captures
 /captures
+*.hprof
+
+# External native build files
 .externalNativeBuild
 .cxx
-local.properties
-.env
-debug.keystore
+
+# Log and temporary files
+*.log
+*.tmp
+
+# OS-generated files
+.DS_Store
+Thumbs.db
