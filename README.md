@@ -5,8 +5,8 @@
 <h1 align="center">Aurelia Jewels</h1>
 
 <p align="center">
-  <strong>Luxury Indian Fine Jewellery Android Application</strong><br />
-  Built with Kotlin, Jetpack Compose, Material Design 3, and Room SQLite
+  <strong>Luxury Indian Fine Jewellery Android Application &amp; Operations Architecture</strong><br />
+  Native Kotlin, Jetpack Compose, Material Design 3, Room SQLite &amp; Automated GitHub Actions APK CI
 </p>
 
 <p align="center">
@@ -19,261 +19,294 @@
 
 ---
 
-## Overview
+## 1. Project Overview
 
-**Aurelia Jewels** is a native Android luxury jewellery commerce prototype designed around a warm editorial Indian heritage aesthetic. The application delivers a complete end-to-end shopping experience with offline-first Room SQLite persistence, adaptive layouts, INR currency formatting, filterable luxury product grids, wishlist management, 3-step guest checkout, WhatsApp order inquiry handoff, and an in-app Admin Design Studio.
+**Aurelia Jewels** (`com.aistudio.aureliajewels.kxmprq`) is a native Android luxury Indian jewellery shopping application engineered around a warm editorial heritage aesthetic. The application delivers an offline-first commerce experience powered by **Room SQLite**, adaptive Material 3 layouts, Indian numbering INR currency formatting, an animated metallic gold foil **Best Offer & Festive Sale** showcase, filterable luxury product grids, high-resolution product detail views with **WhatsApp Share**, persistent wishlist and bag management, 3-step guest checkout, and a cleanly separated **Admin Dashboard** (`Order Management`, `Product Inventory`, and `User Analytics`).
 
-### Visual Identity & Brand Palette
+### Visual Identity & Design Tokens
 
 | Role | Token | Hex | Usage |
 | :--- | :--- | :--- | :--- |
-| Canvas Background | Warm Ivory | `#FAF7F2` | Primary screen background across all flows |
-| Secondary Surface | Soft Cream | `#F3EDE5` | Product cards, summary panels, filter sheets |
-| Subtle Hairline / Tint | Champagne | `#EADCC9` | Borders, dividers, inactive chip surfaces |
-| Luxury Accent | Muted Antique Gold | `#AD853C` | Highlights, ratings, active badges, emblem |
-| Primary Action | Deep Forest Olive | `#27351A` | Primary CTA buttons, selected filter chips |
+| Canvas Background | Warm Ivory | `#FAF7F2` | Primary screen canvas across customer and admin surfaces |
+| Secondary Surface | Soft Cream | `#F3EDE5` | Product cards, specification panels, filter sheets |
+| Subtle Hairline / Tint | Champagne | `#EADCC9` | Borders, dividers, subtle tags |
+| Luxury Accent | Muted Antique Gold | `#AD853C` | Highlights, emblems, active accent labels |
+| Metallic Shimmer CTA | Gold Foil Gradient | `#BF953F -> #FCF6BA -> #B38728 -> #AA771C` | Animated Crown "Claim Offer" pill button |
+| Primary Action | Deep Forest Olive | `#27351A` | Primary buttons, Best Offer VIP box, selected chips |
 
-Typography pairs **Cormorant Garamond** (editorial serif headings and wordmark) with **DM Sans** (clean UI controls, pricing, and metadata), bundled locally in `app/src/main/res/font/`.
+Typography pairs **Cormorant Garamond** (editorial serif headings and wordmark) with **DM Sans** (crisp UI labels, specifications, and pricing), bundled locally in `app/src/main/res/font/`.
 
 ---
 
-## App UI Showcase & Visual Assets
+## 2. System Architecture & Infographics
 
-### 12-Screen Luxury UI Design Showcase
+### 2.1 Layered Android & Future Cloud Separation Architecture
 
-> *Note: The showcase board below presents the 12-screen Aurelia Jewels design system and user journey (Splash, Onboarding, Home, Categories, Product Grid, Product Detail, Cart, Checkout, Payment, Order Tracking, Account, and Notifications). Real device screenshots can be added under `docs/screenshots/` after installing the APK.*
+```mermaid
+flowchart TD
+    subgraph CustomerApp["Customer-Facing Android App (Jetpack Compose)"]
+        HOME["Home + Best Offer VIP Box + Festive Sale"]
+        GRID["Luxury Jewellery Grid (Filter / Sort / Wishlist)"]
+        PDP["Product Detail (HD Zoom + Specs + WhatsApp Share)"]
+        BAG["Wishlist, Bag, Coupons & 3-Step Guest Checkout"]
+    end
+
+    subgraph SeparatedAdmin["Separated Admin Console (Isolated Screen / Future Web Portal)"]
+        ORD_MGT["Order Management Tab"]
+        INV_MGT["Product Inventory Tab"]
+        ANA_MGT["User Analytics Tab"]
+        STUDIO["Brand & Theme Design Studio"]
+    end
+
+    subgraph DomainAndState["State & Domain Layer"]
+        VM["AureliaViewModel (StateFlow / SharedFlow)"]
+        RULES["CommerceRules (INR, Coupons, Indian Address, WhatsApp)"]
+        AI["AiImageRepository (Swappable Interface)"]
+    end
+
+    subgraph Persistence["Local Persistence & Media"]
+        REPO["AureliaRepository (Idempotent Seeding & Order Snapshots)"]
+        ROOM["AureliaDatabase (Room SQLite - 8 Entities)"]
+        COIL["Coil Image Loader + Bundled Studio Drawables"]
+    end
+
+    CustomerApp --> VM
+    SeparatedAdmin --> VM
+    VM --> REPO
+    VM --> RULES
+    VM --> AI
+    REPO --> ROOM
+    CustomerApp --> COIL
+    SeparatedAdmin --> COIL
+```
+
+### 2.2 Production Target Topology (Customer APK vs. Standalone Admin Web Portal)
+
+```text
+┌─────────────────────────────────────┐      ┌─────────────────────────────────────┐
+│  Aurelia Jewels Android APK         │      │  Standalone Admin Web Portal        │
+│  (Customer-Only Production Build)   │      │  (admin.aureliajewels.in on Vercel) │
+│  • Guest Browse + Room Cache        │      │  • Separate Admin Login + 2FA       │
+│  • Auth, Wishlist, Bag, Checkout    │      │  • Order Management & Refund Queue  │
+│  • UPI / Card Checkout SDK          │      │  • Product Inventory & Gold Rates   │
+└──────────────────┬──────────────────┘      └──────────────────┬──────────────────┘
+                   │ Customer JWT                               │ Admin JWT (RBAC)
+                   └──────────────────────┬─────────────────────┘
+                                          ▼
+                   ┌────────────────────────────────────────────┐
+                   │   Server-Side API & Security Boundary      │
+                   │   (Supabase / Firebase / Hostinger VPS)    │
+                   └────────────────────────────────────────────┘
+```
+
+---
+
+## 3. Visual Showcase Gallery
+
+### 3.1 12-Screen Luxury UI Design Showcase
+
+> *Transparency note: The board below presents the 12-screen Aurelia Jewels design system and core shopping journey. Live physical-device captures can be added to [`docs/screenshots/`](docs/screenshots/README.md) after installing the APK on an Android phone.*
 
 <p align="center">
   <img src="public/assets/aistudio/Aurelia_Jewels_Luxury_App_Showcase_a3e5fbb6.png" alt="Aurelia Jewels 12-Screen Luxury App Showcase" width="100%" />
 </p>
 
-### Bundled In-App Studio Photography
+### 3.2 Bundled In-App Studio Photography & Brand Assets
 
-These high-resolution assets are packaged directly inside `app/src/main/res/drawable/` and rendered in the app with metal-specific visual styling:
+All 6 visual assets below are bundled inside `app/src/main/res/drawable/` and rendered live inside the app with photographic metal-finish grading:
 
-| Bridal Hero Banner | Gold Ring | Gold Necklace | Jhumka Earrings | Gold Bangle |
-| :---: | :---: | :---: | :---: | :---: |
-| <img src="app/src/main/res/drawable/img_hero_bridal.jpg" alt="Bridal Hero Banner" width="150" /> | <img src="app/src/main/res/drawable/img_ring_gold.jpg" alt="Gold Ring" width="150" /> | <img src="app/src/main/res/drawable/img_necklace_gold.jpg" alt="Gold Necklace" width="150" /> | <img src="app/src/main/res/drawable/img_earrings_jhumka.jpg" alt="Jhumka Earrings" width="150" /> | <img src="app/src/main/res/drawable/img_bangle_gold.jpg" alt="Gold Bangle" width="150" /> |
+| App Emblem | Bridal Hero Banner | Gold Ring | Gold Necklace | Jhumka Earrings | Gold Bangle |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| <img src="app/src/main/res/drawable/ic_aurelia_logo.jpg" alt="Aurelia Emblem" width="110" /> | <img src="app/src/main/res/drawable/img_hero_bridal.jpg" alt="Bridal Hero Banner" width="120" /> | <img src="app/src/main/res/drawable/img_ring_gold.jpg" alt="Gold Ring" width="120" /> | <img src="app/src/main/res/drawable/img_necklace_gold.jpg" alt="Gold Necklace" width="120" /> | <img src="app/src/main/res/drawable/img_earrings_jhumka.jpg" alt="Jhumka Earrings" width="120" /> | <img src="app/src/main/res/drawable/img_bangle_gold.jpg" alt="Gold Bangle" width="120" /> |
 
 ---
 
-## Complete Feature & Screen Map
+## 4. Public Modules & Feature Matrix
 
-The application includes **20+ functional Jetpack Compose screens** wired via Navigation Compose in `MainActivity.kt`:
+### 4.1 Customer-Facing Modules
 
-| Module | Screens & Capabilities | Source File |
+| Module | Key Screens & Capabilities | Source File |
 | :--- | :--- | :--- |
-| **Entry Flow** | Branded Splash Screen with lotus emblem & multi-page Luxury Onboarding | `ui/screens/SplashAndOnboardingScreens.kt` |
-| **Discovery Home** | Search bar, Bridal Hero Carousel, Trust Strip, Category Grid, Featured & Trending rails, WhatsApp Concierge CTA | `ui/screens/HomeScreen.kt` |
-| **Luxury Jewellery Grid** | Adaptive `LazyVerticalGrid`, Top Bar + ModalBottomSheet **Filter** (Category, Material, Price Range, Saved Only, In Stock), **Sort** sheet, and **Room-persisted Wishlist hearts** | `ui/screens/LuxuryJewelleryGridScreen.kt` |
-| **Catalogue & Search** | 12-Category directory, category listing, instant live search, and persisted recent searches | `ui/screens/CatalogueAndSearchScreens.kt` |
-| **Product Detail** | Full gallery, purity & weight specs, dynamic size selector (ring/bangle/chain), wishlist toggle, Add to Bag, Buy Now, WhatsApp product inquiry | `ui/screens/ProductDetailScreen.kt` |
-| **Wishlist & Shopping Bag** | Saved Room collection with move-to-bag, cart quantity stepper, coupon engine (`AURELIA10`, `HERITAGE5`), live INR price breakdown | `ui/screens/WishlistAndBagScreens.kt` |
-| **Checkout & Orders** | 3-step Guest Checkout (Address with 10-digit Indian mobile & 6-digit PIN validation, Delivery mode, Order Review), Simulated Demo Payment, Order Success, Order History, and 5-stage Order Tracking | `ui/screens/CheckoutAndOrdersScreens.kt` |
-| **Customer & Guides** | Account hub, Notification center, Contact & Support (Call / Email / WhatsApp), Jewellery Care & Sizing Guide, Demo Reference Gold Rates | `ui/screens/CustomerScreens.kt` |
-| **Admin Design Studio** | In-app Catalogue CRUD (Add/Edit/Delete products with Android Photo Picker), live Brand Theme Hex customizer, Demo Order stage simulator, Reset-to-Defaults, and Bespoke AI Concept Studio (`1K` / `2K` / `4K` selector) | `ui/screens/DesignStudioScreens.kt` |
+| **Entry & Onboarding** | Branded Splash with lotus emblem + multi-page editorial onboarding | `ui/screens/SplashAndOnboardingScreens.kt` |
+| **Discovery Home & Offers** | Search bar, Quick-Access pills, Hero Carousel, **Best Offer VIP Box** with animated metallic gold Crown **"CLAIM OFFER"** button & live daily countdown, **Festive Sale Picks** carousel, Categories, Metals, Occasions, Demo Gold Rates | `ui/screens/HomeScreen.kt` |
+| **Luxury Jewellery Grid** | Adaptive `LazyVerticalGrid`, Top Bar & ModalBottomSheet **Filter** (Category, Material, Price Range, Saved Only, In Stock), **Sort** sheet, `SAVE X%` tags, Room-persisted Wishlist hearts | `ui/screens/LuxuryJewelleryGridScreen.kt` |
+| **Detailed Product View** | Swipeable gallery + **HD Fullscreen Zoom Viewer**, variant & dynamic size selectors, full description, structured **Material Specifications** table, **WhatsApp Share** button, Add to Bag, Buy Now | `ui/screens/ProductDetailScreen.kt` |
+| **Catalogue & Live Search** | 12-category directory, category/metal/occasion listing, live search & persisted recent searches | `ui/screens/CatalogueAndSearchScreens.kt` |
+| **Wishlist & Shopping Bag** | Room-saved collection, quantity stepper, promo engine (`AURELIA10` / `HERITAGE5`) with 1-tap Gold Shimmer Claim CTA, INR breakdown | `ui/screens/WishlistAndBagScreens.kt` |
+| **Checkout & Order Tracking** | 3-step guest checkout (validated Indian mobile + 6-digit PIN), simulated demo payment, Order Success, Order History, 5-stage Order Tracking, WhatsApp order summary | `ui/screens/CheckoutAndOrdersScreens.kt` |
+| **Account, Guides & Concierge** | Account hub, Notification center, Call/Email/WhatsApp support, Jewellery Sizing & Care Guide, Demo Gold Rates | `ui/screens/CustomerScreens.kt` |
+
+### 4.2 Separated Admin & Studio Modules
+
+| Module | Dedicated Capabilities | Source File |
+| :--- | :--- | :--- |
+| **Admin Dashboard (Separated)** | 3 isolated tabs: **Order Management** (KPIs + 1-tap Advance Stage), **Product Inventory** (SKU search, Low/Out/Sale filters, live `+/-` Room stock stepper, delete confirmation), **User Analytics** (live Room funnel metrics, Metal distribution bars, Top Categories table) | `ui/screens/AdminDashboardScreen.kt` |
+| **Brand & Bespoke Studio** | Catalogue CRUD with Android Photo Picker, live Brand Hex Color customizer, Demo Reset, Bespoke AI Concept Studio (`1K` / `2K` / `4K` selector) | `ui/screens/DesignStudioScreens.kt` |
 
 ---
 
-## Architecture
-
-Aurelia Jewels follows unidirectional **MVVM** with reactive Kotlin `Flow` / `StateFlow` pipelines backed by local **Room SQLite** persistence.
+## 5. Product Flow
 
 ```mermaid
-flowchart TD
-    UI["Jetpack Compose UI (20+ Material 3 Screens)"] --> VM["AureliaViewModel (StateFlow / UiState)"]
-    VM --> REPO["AureliaRepository (Seeding, Orders, Cart, Wishlist)"]
-    VM --> RULES["CommerceRules (INR Formatter, Coupons, Address & WhatsApp)"]
-    VM --> AI["AiImageRepository (Placeholder / Swappable Gemini Interface)"]
-    REPO --> DB["AureliaDatabase (Room SQLite - 8 Entities)"]
-    UI --> COIL["Coil Image Loader + Local Drawable Assets"]
-```
-
-### Room SQLite Persistence (`aurelia_jewels_demo.db`)
-
-All user state persists across app restarts via 8 Room entities registered in `AureliaDatabase.kt`:
-
-1. `products` (`Product`) — 29 pre-seeded Indian fine jewellery items across 12 categories and 5 materials (`22K Gold`, `18K Gold`, `Diamond`, `925 Silver`, `Polki / Kundan`).
-2. `wishlist` (`WishlistEntity`) — User's hearted luxury pieces synced in real time across Home, Grid, Detail, and Wishlist screens.
-3. `cart_items` (`CartItemEntity`) — Selected item quantities and category-specific sizes.
-4. `addresses` (`AddressEntity`) — Saved Indian delivery addresses with PIN and phone validation.
-5. `orders` (`OrderEntity`) — Immutable JSON order snapshots with trackable demo stages.
-6. `notifications` (`NotificationEntity`) — Seeded and order-triggered alerts.
-7. `recent_searches` (`RecentSearchEntity`) — Persisted search history.
-8. `store_config` (`StoreConfigEntity`) — Custom brand colors, WhatsApp number, and Studio settings.
-
----
-
-## Get the APK Automatically via GitHub Actions (No Android Studio Needed)
-
-This repository includes a pre-configured workflow at `.github/workflows/build-android-apk.yml` that builds and tests the Android APK automatically in the cloud.
-
-### Step-by-Step Instructions
-
-1. Push this project to your GitHub repository (from Google AI Studio via **Export / Push to GitHub**, or manually via Git).
-2. Open your repository on GitHub and click the **Actions** tab at the top.
-3. Click the latest **Build Aurelia Jewels Android APK** workflow run (wait 2-4 minutes for the green checkmark).
-4. Scroll down to **Artifacts** and click **Aurelia-Jewels-APK** to download the zip containing `Aurelia-Jewels-debug.apk`.
-5. Unzip once and share `Aurelia-Jewels-debug.apk` with your client via WhatsApp (as a **Document**) or Google Drive.
-
-### Optional: One-Click Direct APK Download Link (GitHub Release)
-
-To generate a direct `.apk` download link (no zip extraction needed):
-
-1. Go to **Actions** -> **Build Aurelia Jewels Android APK** -> click **Run workflow**.
-2. Check **Create a GitHub Release with direct APK download link**.
-3. Click **Run workflow**. Once finished, open the **Releases** section on the right sidebar of your repo to copy the direct `Aurelia-Jewels-debug.apk` link.
-
-For a client-ready installation checklist and WhatsApp message template, see [`docs/CLIENT_HANDOFF.md`](docs/CLIENT_HANDOFF.md).
-
----
-
-## Prerequisites for Android Development
-
-Before cloning or building the project locally, make sure your machine has:
-
-- **Android Studio**: Meerkat / Narwhal or newer (supporting **AGP 9.1.1** and **Gradle 9.3.1**)
-- **Java Development Kit (JDK)**: **JDK 21** (Temurin / OpenJDK 21 recommended)
-- **Android SDK Components** (installable via Android Studio -> **Settings -> Languages & Frameworks -> Android SDK**):
-  - Android SDK Platform **API 36** (`compileSdk 36`, `minorApiLevel = 1`)
-  - Android SDK Build-Tools **36.x**
-  - Android SDK Platform-Tools
-- **Git**: Installed and configured for cloning the repository
-- **Test Target**: Either an Android Virtual Device (AVD, API 24+) or a physical Android phone running Android 7.0 (API 24) or higher with **USB Debugging** enabled
-
----
-
-## Cloning and Setting Up the Project in Android Studio
-
-Follow these steps to open and configure **Aurelia Jewels** in Android Studio:
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/<your-username>/<your-repo-name>.git
-   cd <your-repo-name>
-   ```
-
-2. **Restore the Debug Keystore (Required Once)**
-   `app/build.gradle.kts` signs debug builds using `${rootDir}/debug.keystore`. That binary file is excluded by `.gitignore`, while `debug.keystore.base64` is tracked in the repository. Run one of the commands below in the project root:
-   ```bash
-   # macOS / Linux / Git Bash
-   base64 -d debug.keystore.base64 > debug.keystore
-
-   # Windows PowerShell
-   [IO.File]::WriteAllBytes("debug.keystore", [Convert]::FromBase64String((Get-Content -Raw "debug.keystore.base64")))
-   ```
-
-3. **Optional Environment File (`.env`)**
-   The Secrets Gradle Plugin reads `.env` and automatically falls back to `.env.example`, so no API key is required to run the app. If you add custom third-party keys later, copy `.env.example` to `.env` (already ignored in `.gitignore`).
-
-4. **Open in Android Studio**
-   - Launch Android Studio and select **Open**.
-   - Choose the cloned root directory (containing `settings.gradle.kts`).
-   - Verify the Gradle JDK is set to **JDK 21** (**Settings -> Build, Execution, Deployment -> Build Tools -> Gradle -> Gradle JDK**).
-   - Wait for **Gradle Sync** to finish downloading dependencies (Jetpack Compose, Room, KSP, Coil, Navigation Compose).
-
-5. **Run on Device or Emulator**
-   - Connect an Android phone via USB (or start an AVD), select the `app` run configuration, and click **Run** (`Shift + F10` / `Ctrl + R`).
-
----
-
-## Building and Generating the APK (Build Menu & CLI)
-
-### Method 1: Android Studio Build Menu (Recommended for GUI Users)
-
-1. Wait until Gradle Sync completes with zero errors.
-2. In the top menu bar, click **Build -> Build Bundle(s) / APK(s) -> Build APK(s)**.
-3. Wait 1-3 minutes while Gradle compiles Kotlin sources, runs KSP for Room, and packages resources.
-4. When the **"APK(s) generated successfully"** notification appears at the bottom-right corner, click **locate**.
-5. Android Studio will open the output folder containing your installable APK:
-   ```text
-   app/build/outputs/apk/debug/app-debug.apk
-   ```
-6. Copy `app-debug.apk` to your Android phone (via USB cable, Google Drive, or WhatsApp as a **Document**), tap it on your phone, allow **Install unknown apps** if prompted, and tap **Install**.
-
-> *Note: Always distribute `.apk` for direct phone installation. `.aab` (Android App Bundle) files are only for Google Play Console uploads and cannot be installed directly on Android phones.*
-
-### Method 2: Command Line (Gradle CLI)
-
-```bash
-# Run JVM unit tests (INR formatter, coupons, checkout validation, grid filters)
-gradle :app:testDebugUnitTest
-
-# Assemble installable Debug APK
-gradle :app:assembleDebug
-```
-
-Output APK location:
-
-```text
-app/build/outputs/apk/debug/app-debug.apk
+flowchart LR
+    A["Splash & Onboarding"] --> B["Home + Best Offer Box"]
+    B --> C["Claim AURELIA10 / HERITAGE5"]
+    B --> D["Filter & Sort Luxury Grid"]
+    D --> E["Product Detail (HD View + Specs)"]
+    E --> F["WhatsApp Share / Wishlist Heart"]
+    E --> G["Add to Bag / Buy Now"]
+    C --> G
+    G --> H["Shopping Bag (Auto-Applied Offer)"]
+    H --> I["3-Step Guest Checkout (Indian PIN/Phone)"]
+    I --> J["Simulated Demo Payment"]
+    J --> K["Order Success + WhatsApp Inquiry"]
+    K --> L["5-Stage Order Tracking"]
 ```
 
 ---
 
-## Connecting Firebase in the Future (Optional)
+## 6. Relational Data Schema & Entity Model (ERD)
 
-Currently, **Aurelia Jewels** runs 100% offline using local **Room SQLite** storage (`aurelia_jewels_demo.db`) and a placeholder implementation (`PlaceholderAiImageRepository`) for the Bespoke AI Concept Studio. If you decide to enable cloud sync (Firestore), user login (Firebase Auth), or live Gemini image generation (Firebase AI Logic) later, follow these steps:
+All 8 entities below are registered in `AureliaDatabase.kt` (`aurelia_jewels_demo.db`, Room 2.7.0):
 
-1. **Create a Firebase Project**
-   - Open the [Firebase Console](https://console.firebase.google.com/) and create a new project.
-   - Click **Add app -> Android**.
-   - Enter the exact package name from `app/build.gradle.kts`:
-     ```text
-     com.aistudio.aureliajewels.kxmprq
-     ```
-   - *(Required for Google Sign-In & App Check)* Add your debug/release **SHA-1** and **SHA-256** signing fingerprints (viewable via `keytool -list -v -keystore debug.keystore -alias androiddebugkey -storepass android`).
+```mermaid
+erDiagram
+    PRODUCTS {
+        string id PK
+        string sku
+        string name
+        string category
+        string metal
+        string purity
+        string weightGrams
+        long priceInr
+        long originalPriceInr
+        int stockQuantity
+        boolean isFeatured
+        boolean isBestSeller
+        boolean isNewArrival
+    }
+    WISHLIST {
+        string productId PK
+        long addedAtMs
+    }
+    CART_ITEMS {
+        string cartKey PK
+        string productId FK
+        string selectedVariant
+        long variantPriceDeltaInr
+        string selectedSize
+        int quantity
+    }
+    ADDRESSES {
+        string id PK
+        string fullName
+        string phone
+        string line1
+        string city
+        string state
+        string pinCode
+        boolean isDefault
+    }
+    ORDERS {
+        string orderId PK
+        string customerName
+        string status
+        string paymentMethod
+        string deliveryMethod
+        long subtotalInr
+        long discountInr
+        long shippingInr
+        long grandTotalInr
+        string itemsSnapshotSerialized
+        long createdAtMs
+    }
+    NOTIFICATIONS {
+        string id PK
+        string title
+        string body
+        boolean isRead
+        string targetRoute
+    }
+    RECENT_SEARCHES {
+        string query PK
+        long searchedAtMs
+    }
+    STORE_CONFIG {
+        int id PK
+        string brandName
+        string primaryColorHex
+        string accentColorHex
+        string whatsappNumber
+        long standardShippingInr
+        long expressShippingInr
+    }
 
-2. **Add `google-services.json`**
-   - Download `google-services.json` from Firebase Console and place it inside the `app/` directory (`app/google-services.json`).
-   - The `com.google.gms.google-services` plugin is already declared in `app/build.gradle.kts` and configured to pass through safely when absent.
-
-3. **Uncomment Pre-Configured Firebase Dependencies**
-   Open `app/build.gradle.kts` and uncomment only the modules you need from the existing catalog entries:
-   - **Core BoM (required for all Firebase libraries):** `implementation(platform(libs.firebase.bom))`
-   - **Firebase AI Logic (live `gemini-3-pro-image-preview` image generation):** `implementation(libs.firebase.ai)` plus `libs.firebase.appcheck.debug` / `libs.firebase.appcheck.recaptcha`
-   - **Cloud Firestore (multi-device sync):** `implementation(libs.firebase.firestore)`
-   - **Google Sign-In via Credential Manager:** uncomment `libs.firebase.auth`, `libs.androidx.credentials`, `libs.androidx.credentials.play.services`, and `libs.googleid` together
-
-4. **Swap the AI Repository Implementation**
-   - Replace `PlaceholderAiImageRepository` in `app/src/main/java/com/example/data/AiImageRepository.kt` with a `Firebase.ai.generativeModel(...)` implementation targeting `gemini-3-pro-image-preview`.
-   - Enable **Firebase AI Logic** and **App Check** in the Firebase Console before testing on device.
-   - *(If using Google AI Studio)* You can also provision Firebase directly from AI Studio without manually downloading `google-services.json`.
-
-5. **Security Best Practices**
-   - Never hardcode API keys or server secrets in Kotlin source files.
-   - Configure strict Firestore Security Rules before storing real customer orders or addresses.
-   - Keep `.env` and private release keystores (`.jks`) out of version control (already enforced by `.gitignore`).
+    PRODUCTS ||--o{ WISHLIST : "saved_in"
+    PRODUCTS ||--o{ CART_ITEMS : "added_to"
+    ADDRESSES ||--o{ ORDERS : "ships_to"
+```
 
 ---
 
-## Tech Stack & Dependencies
+## 7. Mind Map
 
-| Component | Library / Version |
-| :--- | :--- |
-| Application ID | `com.aistudio.aureliajewels.kxmprq` |
-| Min / Target / Compile SDK | `24` / `36` / `36 (minorApiLevel = 1)` |
-| Android Gradle Plugin | `9.1.1` |
-| Gradle | `9.3.1` |
-| Kotlin | `2.4.21` |
-| Jetpack Compose BOM | `2024.09.00` (Material 3 + Material Icons Extended) |
-| Navigation Compose | `2.8.9` |
-| Room Database + KSP | `2.7.0` + KSP `2.3.5` |
-| Image Loading | Coil Compose `2.7.0` |
-| Concurrency | Kotlinx Coroutines `1.10.2` |
-| Testing | JUnit `4.13.2`, Robolectric `4.16.1`, Coroutines Test `1.10.2` |
+```mermaid
+mindmap
+  root((Aurelia Jewels))
+    Customer Android App
+      Discovery Home & Best Offer VIP Box
+      Filter & Sort Luxury Grid
+      HD Product View & WhatsApp Share
+      Room Wishlist & Shopping Bag
+      3-Step Indian Checkout & Tracking
+    Separated Admin Operations
+      Admin Dashboard Console
+        Order Management Tab
+        Product Inventory Tab
+        User Analytics Tab
+      Brand & Bespoke Concept Studio
+      Future Standalone Web Admin Portal
+    Data & Domain Layer
+      8 Room SQLite Entities
+      29 Seeded Indian Jewellery SKUs
+      INR Formatter & Coupon Engine
+      Unit Tests (JUnit + Coroutines)
+    Delivery & Future Cloud
+      GitHub Actions Auto-APK CI
+      Backend PRD & API Spec
+      Free vs Paid Hosting Roadmap
+```
 
 ---
 
-## Project Structure
+## 8. Team Flow
+
+```mermaid
+flowchart LR
+    DEV["Engineering & UI Iteration (Kotlin + Compose)"] --> TEST["Local Verification (Unit Tests + Gradle Assemble)"]
+    TEST --> PUSH["GitHub Push (Clean .gitignore + Source)"]
+    PUSH --> CI["GitHub Actions CI (JDK 21 + Gradle 9.3.1)"]
+    CI --> APK["Auto-Built Aurelia-Jewels-debug.apk (Artifact / Release)"]
+    APK --> UAT["Client Phone Install & Feedback"]
+    UAT --> PHASE2["Phase 2 Backend Execution (Docs/backend_prd.md)"]
+```
+
+---
+
+## 9. Project Structure
 
 ```text
 .
 ├── .github/
 │   └── workflows/
 │       └── build-android-apk.yml          # Automated unit tests, Debug APK artifact & optional Release
+├── Docs/
+│   ├── backend_prd.md                     # Architecture PRD, Admin separation, SQL schema & API contracts
+│   └── hosting_guide.md                   # Free testing vs paid production hosting comparison
 ├── docs/
 │   ├── CLIENT_HANDOFF.md                  # Non-developer APK export & client delivery guide
+│   ├── backend/                           # Deep-dive backend pack (INDEX, PRD, Hosting, Admin, API/DB)
 │   └── screenshots/
 │       └── README.md                      # Guide for adding live device screenshots
 ├── app/
@@ -292,8 +325,8 @@ Currently, **Aurelia Jewels** runs 100% offline using local **Room SQLite** stor
 │       │   │   │   └── CommerceRules.kt   # INR formatting, coupons, validators, WhatsApp text
 │       │   │   └── ui/
 │       │   │       ├── AureliaViewModel.kt
-│       │   │       ├── components/        # Reusable M3 luxury cards, bars & photo renderer
-│       │   │       ├── screens/           # 9 screen files covering 20+ app views
+│       │   │       ├── components/        # GoldShimmerClaimButton, RoyalCrownIcon, M3 cards & bars
+│       │   │       ├── screens/           # 10 screen files (Customer UI + AdminDashboardScreen)
 │       │   │       └── theme/             # Color.kt, Type.kt, Theme.kt
 │       │   └── res/
 │       │       ├── drawable/              # Custom adaptive logo + 5 studio jewellery photos
@@ -308,6 +341,7 @@ Currently, **Aurelia Jewels** runs 100% offline using local **Room SQLite** stor
 │   └── Aurelia_Jewels_Luxury_App_Showcase_a3e5fbb6.png
 ├── debug.keystore.base64                  # Base64-encoded debug signing key for CI & local builds
 ├── .env.example                           # Secrets plugin placeholder
+├── .gitignore                             # Standard Android ignore rules
 ├── build.gradle.kts
 ├── gradle.properties
 └── settings.gradle.kts
@@ -315,9 +349,134 @@ Currently, **Aurelia Jewels** runs 100% offline using local **Room SQLite** stor
 
 ---
 
-## Demo Scope & Transparent Disclosures
+## 10. Get the APK Automatically via GitHub Actions (No Android Studio Needed)
 
-- **Local Persistence Only**: All catalogue data, wishlist items, shopping bag contents, addresses, and orders are stored on-device using Room SQLite (`aurelia_jewels_demo.db`). No backend server or user account login is required for demo walkthroughs.
-- **Simulated Payments & Demo Gold Rates**: Payment screens simulate checkout confirmation for presentation purposes only; no real payment gateway or financial transaction is executed. Gold rate cards are labeled as demo reference rates.
-- **Bespoke AI Concept Studio**: Live cloud image generation via Firebase AI Logic (`gemini-3-pro-image-preview`) is decoupled behind `AiImageRepository` and currently uses `PlaceholderAiImageRepository` with clearly labeled sample concepts because Firebase setup was not provisioned.
-- **WhatsApp Handoff**: Order summaries and product inquiries compose real pre-filled WhatsApp intents (`https://wa.me/...`) using the configured concierge number in Store Settings.
+This repository includes `.github/workflows/build-android-apk.yml` to compile and test the Android APK automatically in the cloud:
+
+1. Push this project to your GitHub repository.
+2. Open the **Actions** tab -> click the latest **Build Aurelia Jewels Android APK** run (2-4 minutes).
+3. Scroll down to **Artifacts** -> download **Aurelia-Jewels-APK** and unzip `Aurelia-Jewels-debug.apk`.
+4. *(Direct APK Link Option)* Open **Actions -> Build Aurelia Jewels Android APK -> Run workflow**, tick **Create a GitHub Release with direct APK download link**, and run — the direct `.apk` link appears under **Releases**.
+
+---
+
+## 11. Prerequisites for Android Development
+
+- **Android Studio**: Meerkat / Narwhal or newer (supporting **AGP 9.1.1** and **Gradle 9.3.1**)
+- **Java Development Kit (JDK)**: **JDK 21** (Temurin / OpenJDK 21 recommended)
+- **Android SDK Components**: Platform **API 36** (`compileSdk 36`, `minorApiLevel = 1`), Build-Tools **36.x**, Platform-Tools
+- **Git** and an Android physical phone (API 24+) or AVD emulator
+
+---
+
+## 12. Cloning, Setting Up & Building the APK in Android Studio
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/<your-username>/<your-repo-name>.git
+   cd <your-repo-name>
+   ```
+2. **Decode the Debug Keystore once** (`debug.keystore` is gitignored; `debug.keystore.base64` is tracked):
+   ```bash
+   # macOS / Linux / Git Bash
+   base64 -d debug.keystore.base64 > debug.keystore
+
+   # Windows PowerShell
+   [IO.File]::WriteAllBytes("debug.keystore", [Convert]::FromBase64String((Get-Content -Raw "debug.keystore.base64")))
+   ```
+3. **Open in Android Studio** -> select the root folder -> verify Gradle JDK is **JDK 21** -> wait for Gradle Sync.
+4. **Generate the APK via Build Menu**:
+   - Top menu: **Build -> Build Bundle(s) / APK(s) -> Build APK(s)**.
+   - Click **locate** when complete to open `app/build/outputs/apk/debug/app-debug.apk`.
+5. **CLI Equivalent**:
+   ```bash
+   gradle :app:testDebugUnitTest
+   gradle :app:assembleDebug
+   ```
+
+---
+
+## 13. Connecting Firebase in the Future (Optional)
+
+When moving from the offline Room demo to live Firebase cloud sync or Gemini AI image generation:
+
+1. Create a project in [Firebase Console](https://console.firebase.google.com/) and add an Android app using package name `com.aistudio.aureliajewels.kxmprq` + your SHA-1/SHA-256 keystore fingerprints.
+2. Place `google-services.json` inside `app/`.
+3. Uncomment the pre-configured dependencies in `app/build.gradle.kts` (`firebase-bom`, `firebase-ai`, `firebase-firestore`, `firebase-auth`, `credentials`, `firebase-appcheck-*`).
+4. Swap `PlaceholderAiImageRepository` in `AiImageRepository.kt` with a `Firebase.ai.generativeModel(...)` implementation targeting `gemini-3-pro-image-preview`.
+5. For full SQL vs. Firebase trade-offs and strict standalone Admin separation, see [`Docs/backend_prd.md`](Docs/backend_prd.md) and [`Docs/hosting_guide.md`](Docs/hosting_guide.md).
+
+---
+
+## 14. Non-Negotiables
+
+- **Brand Restraint**: Strictly warm luxury Indian editorial palette (`#FAF7F2`, `#F3EDE5`, `#EADCC9`, `#AD853C`, `#27351A`). No neon, no purple slop, no emojis in UI or docs.
+- **Strict Customer vs. Admin Separation**: Production deployments must isolate store administration into a standalone web portal with server-side RBAC — never trust client-side role checks or client-supplied prices.
+- **Zero Hardcoded Secrets**: Never commit `.env`, API keys, or release `.jks` keystores to Git (enforced by `.gitignore`).
+- **Honest Demo Boundaries**: Never claim live payment collection, BIS hallmark certification, or live bullion feeds in an offline prototype.
+- **Verified Engineering**: Every change compiles via Gradle and preserves unit test coverage (`AureliaCommerceRulesTest`).
+
+---
+
+## 15. Current Limits (Do Not Overclaim)
+
+| Area | Current Verified State | What Is Required for Production |
+| :--- | :--- | :--- |
+| **Database & Sync** | Local on-device Room SQLite (`aurelia_jewels_demo.db`) | Provision cloud backend per [`Docs/backend_prd.md`](Docs/backend_prd.md) |
+| **Payments** | Simulated demo checkout confirmation only | Integrate Razorpay / Cashfree with server-verified HMAC webhooks |
+| **Admin Separation** | Isolated in-app `AdminDashboardScreen` for demo review | Disable demo admin flag in Play Store builds; deploy standalone web admin portal |
+| **Gold Rates** | Illustrative static demo reference figures | Connect Admin-updated `gold_rates` table or licensed bullion API |
+| **Bespoke AI Studio** | Clearly labeled placeholder concepts (`PlaceholderAiImageRepository`) | Provision Firebase AI Logic + App Check + per-user daily caps |
+| **Visual Captures** | 12-screen UI Showcase + 6 bundled drawables verified in repo | Capture live phone screenshots after APK install and place in `docs/screenshots/` |
+| **GitHub Actions CI** | Workflow YAML prepared with JDK 21 + Gradle 9.3.1 + keystore decode | Verify first live cloud build run after pushing to GitHub |
+
+---
+
+## 16. Documentation Map
+
+| Document | Description |
+| :--- | :--- |
+| [`README.md`](README.md) | Master project overview, architecture, setup, APK build & attribution |
+| [`Docs/backend_prd.md`](Docs/backend_prd.md) | Backend architecture PRD, Customer vs. Admin separation, portable SQL schema & API contracts |
+| [`Docs/hosting_guide.md`](Docs/hosting_guide.md) | Free testing stacks (Firebase / Supabase / Vercel) vs. paid production hosting (Hostinger VPS / Pro tiers) |
+| [`docs/backend/INDEX.md`](docs/backend/INDEX.md) | Deep-dive backend documentation index |
+| [`docs/backend/BACKEND_PRD.md`](docs/backend/BACKEND_PRD.md) | Extended product requirements, user roles & phased roadmap |
+| [`docs/backend/HOSTING_AND_COST_COMPARISON.md`](docs/backend/HOSTING_AND_COST_COMPARISON.md) | Detailed INR/USD cost breakdown & third-party India launch fees |
+| [`docs/backend/ADMIN_PANEL_SEPARATION_PLAN.md`](docs/backend/ADMIN_PANEL_SEPARATION_PLAN.md) | 3-layer Admin separation, RBAC rules & audit logging blueprint |
+| [`docs/backend/API_AND_DATABASE_SPEC.md`](docs/backend/API_AND_DATABASE_SPEC.md) | Complete Room-to-Cloud entity map, state machines & endpoint reference |
+| [`docs/CLIENT_HANDOFF.md`](docs/CLIENT_HANDOFF.md) | Non-developer APK delivery checklist & client WhatsApp template |
+| [`docs/screenshots/README.md`](docs/screenshots/README.md) | Guide for adding physical device screenshots |
+
+---
+
+## 17. Contributors & Ecosystem Attribution
+
+### Contributors
+
+- **Pranav Raj Sahu** — [github.com/pranavsahu005](https://github.com/pranavsahu005)
+- **Futures17** — [github.com/futures17](https://github.com/futures17)
+- **Aarush** — [github.com/aarushxox](https://github.com/aarushxox)
+
+### Engineered & Curated by Pranav Raj Sahu — Hexatom Team / Aronar AI
+
+| Platform / Project | Official Link | Category |
+| :--- | :--- | :--- |
+| GitHub Repository (Reference) | [github.com/aarushxox/modern-clinic-neumorphism-dashboard](https://github.com/aarushxox/modern-clinic-neumorphism-dashboard) | Source Code |
+| Policies & Licensing | `POLICIES.md` · `LICENSE` | Usage Terms |
+| Hexatom | [hexatom-org.vercel.app](https://hexatom-org.vercel.app) | Agency |
+| Hexatom Portfolio | [hexatom.imaginefuture1-7.workers.dev](https://hexatom.imaginefuture1-7.workers.dev) | Showcase |
+| Aronar AI | [aronar-ai.vercel.app](https://aronar-ai.vercel.app) | AI Venture |
+| Wear Tome | [weartome.in](https://weartome.in) | Streetwear Brand |
+| Pranav Sahu Portfolio | [pranav005-portfolio.netlify.app](https://pranav005-portfolio.netlify.app) | Founder |
+| Hexatom Fonts | [the-fonts-hexatom.pranavsahu005.workers.dev](https://the-fonts-hexatom.pranavsahu005.workers.dev) | Typography Tool |
+| Hexatom Colors | [hexatom-the-colors.base44.app](https://hexatom-the-colors.base44.app) | Color System Tool |
+| CREVR Media Flow | [crevr-media-flow.base44.app](https://crevr-media-flow.base44.app) | CREVR Tool |
+| CREVR Studio App | [crevr-807931817037.asia-southeast1.run.app](https://crevr-807931817037.asia-southeast1.run.app) | CREVR Tool |
+| CREVR Tree | [crevr-tree.vercel.app](https://crevr-tree.vercel.app) | CREVR Links |
+
+---
+
+<p align="center">
+  Copyright &copy; 2026 Pranav Raj Sahu &middot; Hexatom Team / Aronar AI. All Rights Reserved.<br />
+  Built with Human Engineering + Google AI Studio, Gemini &amp; API Tooling.
+</p>

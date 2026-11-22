@@ -19,6 +19,14 @@ val HairlineBorder = Color(0xFFE6DDD2)
 val ErrorCrimson = Color(0xFFA13B32)
 val SuccessForest = Color(0xFF335E3B)
 
+// Metallic Gold Foil Shimmer Palette (Claim Offer / VIP Sale Button)
+val GoldFoilStart = Color(0xFFBF953F)
+val GoldFoilHighlight = Color(0xFFFCF6BA)
+val GoldFoilMid = Color(0xFFB38728)
+val GoldFoilSheen = Color(0xFFFBF5B7)
+val GoldFoilDeep = Color(0xFFAA771C)
+val GoldFoilText = Color(0xFF796703)
+
 fun parseHexColorOrDefault(hex: String, fallback: Color): Color {
     val cleaned = hex.trim().removePrefix("#")
     if (cleaned.length != 6 && cleaned.length != 8) return fallback

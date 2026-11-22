@@ -28,6 +28,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowForward
+import androidx.compose.material.icons.outlined.AdminPanelSettings
 import androidx.compose.material.icons.outlined.AutoAwesome
 import androidx.compose.material.icons.outlined.Call
 import androidx.compose.material.icons.outlined.DeleteOutline
@@ -103,7 +104,8 @@ fun AccountScreen(
     onOpenSupport: () -> Unit,
     onOpenStudio: () -> Unit,
     onOpenBespokeAi: () -> Unit,
-    onOpenAbout: () -> Unit
+    onOpenAbout: () -> Unit,
+    onOpenAdminDashboard: () -> Unit = {}
 ) {
     val ext = LocalAureliaColors.current
     var showEditProfile by remember { mutableStateOf(false) }
@@ -233,6 +235,14 @@ fun AccountScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Column {
+                    AccountListRow(
+                        icon = Icons.Outlined.AdminPanelSettings,
+                        title = "Admin Dashboard (Separated Console)",
+                        subtitle = "Order Management, Product Inventory & User Analytics",
+                        onClick = onOpenAdminDashboard,
+                        testTag = "account_open_admin_dashboard"
+                    )
+                    HorizontalDivider(thickness = 0.75.dp, color = ext.hairlineBorder)
                     AccountListRow(
                         icon = Icons.Outlined.Tune,
                         title = "Admin / Design Studio (Demo Mode)",

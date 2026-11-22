@@ -1,6 +1,7 @@
 package com.example.ui.screens
 
 import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -33,13 +34,17 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.AutoAwesome
+import androidx.compose.material.icons.outlined.Chat
+import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material.icons.outlined.Diamond
 import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.outlined.Fullscreen
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.LocalShipping
 import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material.icons.outlined.ShoppingBag
 import androidx.compose.material.icons.outlined.Straighten
+import androidx.compose.material.icons.outlined.ZoomIn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -59,19 +64,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import com.example.data.VariantOption
 import com.example.data.local.ProductEntity
 import com.example.data.parsedSizes
 import com.example.data.parsedVariants
 import com.example.data.requiresExplicitSize
+import com.example.domain.CommerceRules
 import com.example.domain.InrFormatter
 import com.example.ui.components.EmptyLuxuryState
 import com.example.ui.components.JewelleryPhoto
@@ -93,7 +103,8 @@ fun ProductDetailScreen(
     onToggleWishlist: (String) -> Unit,
     onAddToCart: (ProductEntity, VariantOption, String, Int) -> Unit,
     onBuyNow: (ProductEntity, VariantOption, String, Int) -> Unit,
-    onOpenProduct: (String) -> Unit
+    onOpenProduct: (String) -> Unit,
+    whatsappNumber: String = ""
 ) {
     val ext = LocalAureliaColors.current
     val context = LocalContext.current
@@ -129,6 +140,8 @@ fun ProductDetailScreen(
     var quantity by remember(product.id) { mutableIntStateOf(1) }
     var sizeError by remember(product.id) { mutableStateOf<String?>(null) }
     var showSizeGuide by remember { mutableStateOf(false) }
+    var showHighResViewer by remember { mutableStateOf(false) }
+    var zoomedIn by remember { mutableStateOf(false) }
 
     val activePrice = (product.priceInr + selectedVariant.priceDeltaInr).coerceAtLeast(100L)
     val galleryFrames = remember(product.id, product.imageKey) {
@@ -168,7 +181,13 @@ fun ProductDetailScreen(
             ) {
                 HorizontalPager(
                     state = pagerState,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .clickable {
+                            zoomedIn = false
+                            showHighResViewer = true
+                        }
+                        .testTag("pdp_hero_gallery")
                 ) { idx ->
                     val (key, desc) = galleryFrames[idx]
                     JewelleryPhoto(
@@ -179,6 +198,39 @@ fun ProductDetailScreen(
                         modifier = Modifier.fillMaxSize(),
                         contentScale = ContentScale.Crop
                     )
+                }
+
+                // High-Res Fullscreen Inspect Chip
+                Surface(
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(12.dp)
+                        .clip(RoundedCornerShape(20.dp))
+                        .clickable {
+                            zoomedIn = false
+                            showHighResViewer = true
+                        }
+                        .testTag("pdp_inspect_highres_btn"),
+                    shape = RoundedCornerShape(20.dp),
+                    color = MaterialTheme.colorScheme.surface.copy(alpha = 0.90f)
+                ) {
+                    Row(
+                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.Fullscreen,
+                            contentDescription = "Inspect high-resolution photo",
+                            tint = MaterialTheme.colorScheme.onSurface,
+                            modifier = Modifier.size(15.dp)
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text(
+                            text = "HD View",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                    }
                 }
 
                 // Floating Top Action Bar
@@ -490,6 +542,108 @@ fun ProductDetailScreen(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
+                // 6b. Dedicated WhatsApp Share & Concierge Button
+                Surface(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(12.dp))
+                        .clickable {
+                            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                            val sizeLine = if (selectedSize.isNotBlank() && selectedSize != "One Size") {
+                                "Size: $selectedSize\n"
+                            } else ""
+                            val waMessage = buildString {
+                                appendLine("Aurelia Jewels - Piece Details")
+                                appendLine("${product.name} (SKU: ${product.sku})")
+                                appendLine("Price: ${InrFormatter.format(activePrice)}")
+                                appendLine("Metal & Purity: ${product.metal} | ${product.purity}")
+                                appendLine("Variant: ${selectedVariant.label}")
+                                if (sizeLine.isNotEmpty()) append(sizeLine)
+                                appendLine("Approx. Weight: ${product.weightGrams}")
+                                appendLine()
+                                append(product.description)
+                            }
+                            val normalizedNumber = CommerceRules.normalizeWhatsAppNumber(whatsappNumber)
+                            val waUrl = if (normalizedNumber.isNotBlank()) {
+                                "https://wa.me/$normalizedNumber?text=${Uri.encode(waMessage)}"
+                            } else {
+                                "https://wa.me/?text=${Uri.encode(waMessage)}"
+                            }
+                            val waIntent = Intent(Intent.ACTION_VIEW, Uri.parse(waUrl))
+                            runCatching {
+                                context.startActivity(waIntent)
+                            }.onFailure {
+                                val fallback = Intent(Intent.ACTION_SEND).apply {
+                                    putExtra(Intent.EXTRA_TEXT, waMessage)
+                                    type = "text/plain"
+                                }
+                                context.startActivity(Intent.createChooser(fallback, "Share via WhatsApp"))
+                            }
+                        }
+                        .testTag("pdp_whatsapp_share_btn"),
+                    shape = RoundedCornerShape(12.dp),
+                    color = Color(0xFFEBF5EE),
+                    border = BorderStroke(1.dp, ext.success.copy(alpha = 0.55f))
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 13.dp),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.Chat,
+                            contentDescription = "WhatsApp Share",
+                            tint = ext.success,
+                            modifier = Modifier.size(19.dp)
+                        )
+                        Spacer(modifier = Modifier.width(9.dp))
+                        Text(
+                            text = "WhatsApp Share",
+                            style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.SemiBold),
+                            color = ext.success
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(18.dp))
+
+                // 6c. Structured Material Specifications Table
+                Text("Material Specifications", style = MaterialTheme.typography.headlineSmall)
+                Spacer(modifier = Modifier.height(10.dp))
+                Surface(
+                    shape = RoundedCornerShape(12.dp),
+                    color = MaterialTheme.colorScheme.surface,
+                    border = BorderStroke(0.75.dp, ext.hairlineBorder),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .testTag("pdp_material_specs_card")
+                ) {
+                    Column(modifier = Modifier.padding(horizontal = 14.dp, vertical = 10.dp)) {
+                        SpecificationRow("Metal", product.metal)
+                        HorizontalDivider(thickness = 0.5.dp, color = ext.hairlineBorder)
+                        SpecificationRow("Purity", product.purity.ifBlank { "Standard Finish" })
+                        HorizontalDivider(thickness = 0.5.dp, color = ext.hairlineBorder)
+                        SpecificationRow("Approx. Weight", product.weightGrams)
+                        HorizontalDivider(thickness = 0.5.dp, color = ext.hairlineBorder)
+                        SpecificationRow("Category", product.category)
+                        HorizontalDivider(thickness = 0.5.dp, color = ext.hairlineBorder)
+                        SpecificationRow("Collection", product.collection)
+                        HorizontalDivider(thickness = 0.5.dp, color = ext.hairlineBorder)
+                        SpecificationRow("Occasion", product.occasion)
+                        HorizontalDivider(thickness = 0.5.dp, color = ext.hairlineBorder)
+                        SpecificationRow("SKU Code", product.sku)
+                        HorizontalDivider(thickness = 0.5.dp, color = ext.hairlineBorder)
+                        SpecificationRow(
+                            "Availability",
+                            if (product.stockQuantity > 0) "In Stock (${product.stockQuantity} units)" else "Out of Stock"
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
                 // 7. Honest Demo Specification & Care Cards (no false hallmark/certification claims)
                 Surface(
                     shape = RoundedCornerShape(12.dp),
@@ -646,6 +800,98 @@ fun ProductDetailScreen(
                 Spacer(modifier = Modifier.height(24.dp))
             }
         }
+    }
+
+    if (showHighResViewer) {
+        Dialog(
+            onDismissRequest = { showHighResViewer = false },
+            properties = DialogProperties(usePlatformDefaultWidth = false)
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color(0xF215120E))
+                    .testTag("pdp_highres_dialog")
+            ) {
+                val (activeKey, activeDesc) = galleryFrames[pagerState.currentPage]
+                JewelleryPhoto(
+                    imageKey = activeKey,
+                    customImageUri = if (pagerState.currentPage == 0) product.customImageUri else null,
+                    metal = product.metal,
+                    contentDescription = "${product.name} - $activeDesc (High Resolution)",
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .clickable { zoomedIn = !zoomedIn }
+                        .graphicsLayer {
+                            val targetScale = if (zoomedIn) 2.0f else 1.0f
+                            scaleX = targetScale
+                            scaleY = targetScale
+                        },
+                    contentScale = ContentScale.Fit
+                )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .statusBarsPadding()
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Surface(
+                        shape = RoundedCornerShape(20.dp),
+                        color = Color.White.copy(alpha = 0.16f)
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .clickable { zoomedIn = !zoomedIn }
+                                .padding(horizontal = 12.dp, vertical = 7.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                imageVector = Icons.Outlined.ZoomIn,
+                                contentDescription = "Toggle zoom",
+                                tint = Color.White,
+                                modifier = Modifier.size(16.dp)
+                            )
+                            Spacer(modifier = Modifier.width(6.dp))
+                            Text(
+                                text = if (zoomedIn) "2x Zoom (Tap to reset)" else "Tap photo to zoom",
+                                style = MaterialTheme.typography.labelSmall,
+                                color = Color.White
+                            )
+                        }
+                    }
+                    FloatingCircleAction(
+                        icon = Icons.Outlined.Close,
+                        contentDescription = "Close high-resolution viewer",
+                        onClick = { showHighResViewer = false },
+                        testTag = "pdp_highres_close_btn"
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun SpecificationRow(label: String, value: String) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        Text(
+            text = value,
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.onSurface
+        )
     }
 }
 

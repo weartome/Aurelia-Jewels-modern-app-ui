@@ -34,6 +34,7 @@ import com.example.ui.components.MainTab
 import com.example.ui.screens.AboutBrandScreen
 import com.example.ui.screens.AccountScreen
 import com.example.ui.screens.AddressesScreen
+import com.example.ui.screens.AdminDashboardScreen
 import com.example.ui.screens.AdminDesignStudioScreen
 import com.example.ui.screens.BespokeAiStudioScreen
 import com.example.ui.screens.CartScreen
@@ -197,7 +198,17 @@ fun AureliaAppRoot(viewModel: AureliaViewModel) {
                             onOpenGoldRates = { navController.navigate("gold_rates") },
                             onOpenSupport = { navController.navigate("support") },
                             onOpenStudio = { navController.navigate("studio") },
-                            onOpenBespokeAi = { navController.navigate("bespoke_ai") }
+                            onOpenBespokeAi = { navController.navigate("bespoke_ai") },
+                            appliedCouponCode = appliedCouponCode,
+                            onClaimOffer = { code -> viewModel.claimOfferCode(code) },
+                            onQuickAddToBag = { prod ->
+                                viewModel.addToCart(
+                                    product = prod,
+                                    variant = prod.parsedVariants().first(),
+                                    size = prod.parsedSizes().first(),
+                                    quantity = 1
+                                )
+                            }
                         )
                     }
 
@@ -289,7 +300,8 @@ fun AureliaAppRoot(viewModel: AureliaViewModel) {
                                     navController.navigate("cart")
                                 }
                             },
-                            onOpenProduct = { nextId -> navController.navigate("product/$nextId") }
+                            onOpenProduct = { nextId -> navController.navigate("product/$nextId") },
+                            whatsappNumber = config.whatsappNumber
                         )
                     }
 
@@ -413,7 +425,8 @@ fun AureliaAppRoot(viewModel: AureliaViewModel) {
                             onOpenSupport = { navController.navigate("support") },
                             onOpenStudio = { navController.navigate("studio") },
                             onOpenBespokeAi = { navController.navigate("bespoke_ai") },
-                            onOpenAbout = { navController.navigate("about") }
+                            onOpenAbout = { navController.navigate("about") },
+                            onOpenAdminDashboard = { navController.navigate("admin_dashboard") }
                         )
                     }
 
@@ -463,6 +476,21 @@ fun AureliaAppRoot(viewModel: AureliaViewModel) {
                         AboutBrandScreen(
                             config = config,
                             onBack = { navController.popBackStack() }
+                        )
+                    }
+
+                    composable("admin_dashboard") {
+                        AdminDashboardScreen(
+                            orders = orders,
+                            products = products,
+                            wishlistIds = wishlistIds,
+                            cartItems = cartItems,
+                            addresses = addresses,
+                            onBack = { navController.popBackStack() },
+                            onAdvanceOrderStatus = { viewModel.advanceOrderStatus(it) },
+                            onUpsertProduct = { viewModel.upsertProduct(it) },
+                            onDeleteProduct = { viewModel.deleteProduct(it) },
+                            onOpenBrandStudio = { navController.navigate("studio") }
                         )
                     }
 

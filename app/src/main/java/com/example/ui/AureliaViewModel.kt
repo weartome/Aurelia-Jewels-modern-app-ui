@@ -197,6 +197,19 @@ class AureliaViewModel(application: Application) : AndroidViewModel(application)
         return validation
     }
 
+    fun claimOfferCode(code: String) {
+        val normalized = code.trim().uppercase()
+        if (normalized == "AURELIA10" || normalized == "HERITAGE5") {
+            _appliedCouponCode.value = normalized
+            val detail = if (normalized == "AURELIA10") {
+                "10% off will auto-apply on bags above ₹10,000"
+            } else {
+                "5% heritage savings auto-applied in your Bag"
+            }
+            emitMessage("Offer $normalized claimed - $detail")
+        }
+    }
+
     fun clearCoupon() {
         _appliedCouponCode.value = null
     }

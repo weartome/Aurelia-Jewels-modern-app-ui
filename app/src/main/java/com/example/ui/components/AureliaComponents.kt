@@ -76,7 +76,30 @@ import coil.compose.AsyncImage
 import com.example.R
 import com.example.data.local.ProductEntity
 import com.example.domain.InrFormatter
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.graphicsLayer
 import com.example.ui.theme.CormorantGaramond
+import com.example.ui.theme.GoldFoilDeep
+import com.example.ui.theme.GoldFoilHighlight
+import com.example.ui.theme.GoldFoilMid
+import com.example.ui.theme.GoldFoilSheen
+import com.example.ui.theme.GoldFoilStart
+import com.example.ui.theme.GoldFoilText
 import com.example.ui.theme.LocalAureliaColors
 import kotlin.math.PI
 import kotlin.math.cos
@@ -378,6 +401,29 @@ fun LuxuryProductCard(
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.padding(horizontal = 7.dp, vertical = 2.dp)
+                        )
+                    }
+                }
+
+                val origPrice = product.originalPriceInr
+                if (product.stockQuantity > 0 && origPrice != null && origPrice > product.priceInr) {
+                    val discountPct = (((origPrice - product.priceInr) * 100L) / origPrice).toInt().coerceAtLeast(1)
+                    Surface(
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                            .padding(8.dp),
+                        shape = RoundedCornerShape(6.dp),
+                        color = MaterialTheme.colorScheme.primary.copy(alpha = 0.92f)
+                    ) {
+                        Text(
+                            text = "SAVE $discountPct%",
+                            style = MaterialTheme.typography.labelSmall.copy(
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 9.5.sp,
+                                letterSpacing = 0.5.sp
+                            ),
+                            color = GoldFoilHighlight,
+                            modifier = Modifier.padding(horizontal = 7.dp, vertical = 3.dp)
                         )
                     }
                 }
@@ -758,6 +804,147 @@ fun SectionHeaderRow(
                     .clip(RoundedCornerShape(6.dp))
                     .clickable(onClick = onActionClick)
                     .padding(horizontal = 6.dp, vertical = 4.dp)
+            )
+        }
+    }
+}
+
+/**
+ * Custom vector Royal Crown silhouette inspired by luxury jeweller crests (576x512 proportion).
+ */
+@Composable
+fun RoyalCrownIcon(
+    modifier: Modifier = Modifier,
+    tint: Color = GoldFoilText
+) {
+    Canvas(modifier = modifier) {
+        val w = size.width
+        val h = size.height
+        val path = Path().apply {
+            // Base band and three-peak royal crown body
+            moveTo(w * 0.15f, h * 0.84f)
+            lineTo(w * 0.08f, h * 0.34f)
+            lineTo(w * 0.31f, h * 0.50f)
+            lineTo(w * 0.50f, h * 0.22f)
+            lineTo(w * 0.69f, h * 0.50f)
+            lineTo(w * 0.92f, h * 0.34f)
+            lineTo(w * 0.85f, h * 0.84f)
+            close()
+        }
+        drawPath(path = path, color = tint)
+        // Crown base jewel bar
+        drawRoundRect(
+            color = tint,
+            topLeft = Offset(w * 0.15f, h * 0.86f),
+            size = androidx.compose.ui.geometry.Size(w * 0.70f, h * 0.09f),
+            cornerRadius = androidx.compose.ui.geometry.CornerRadius(h * 0.045f, h * 0.045f)
+        )
+        // Three crown pearl tips
+        val pearlRadius = w * 0.068f
+        drawCircle(color = tint, radius = pearlRadius, center = Offset(w * 0.50f, h * 0.15f))
+        drawCircle(color = tint, radius = pearlRadius * 0.88f, center = Offset(w * 0.08f, h * 0.27f))
+        drawCircle(color = tint, radius = pearlRadius * 0.88f, center = Offset(w * 0.92f, h * 0.27f))
+    }
+}
+
+/**
+ * Luxury metallic gold foil pill CTA button with animated shimmer sweep,
+ * royal crown emblem, tactile press scale (0.95x), and soft drop shadow.
+ */
+@Composable
+fun GoldShimmerClaimButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    showCrown: Boolean = true,
+    testTag: String? = null
+) {
+    val haptic = LocalHapticFeedback.current
+    val interactionSource = remember { MutableInteractionSource() }
+    val isPressed by interactionSource.collectIsPressedAsState()
+    val scale by animateFloatAsState(
+        targetValue = if (isPressed) 0.95f else 1f,
+        animationSpec = spring(stiffness = 450f),
+        label = "gold_btn_scale"
+    )
+
+    val shimmerTransition = rememberInfiniteTransition(label = "gold_foil_shimmer")
+    val shimmerProgress by shimmerTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 3600, easing = LinearEasing),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "gold_foil_shift"
+    )
+
+    val goldBrush = Brush.linearGradient(
+        colors = listOf(
+            GoldFoilStart,
+            GoldFoilHighlight,
+            GoldFoilMid,
+            GoldFoilSheen,
+            GoldFoilDeep,
+            GoldFoilHighlight,
+            GoldFoilStart
+        ),
+        start = Offset(x = -360f + (shimmerProgress * 360f), y = 0f),
+        end = Offset(x = 540f + (shimmerProgress * 360f), y = 120f)
+    )
+
+    Box(
+        modifier = modifier
+            .graphicsLayer {
+                scaleX = scale
+                scaleY = scale
+            }
+            .minimumInteractiveComponentSize()
+            .heightIn(min = 44.dp)
+            .shadow(
+                elevation = 6.dp,
+                shape = RoundedCornerShape(40.dp),
+                ambientColor = Color(0x29000000),
+                spotColor = Color(0x36000000)
+            )
+            .clip(RoundedCornerShape(40.dp))
+            .background(brush = goldBrush, shape = RoundedCornerShape(40.dp))
+            .border(
+                width = 0.75.dp,
+                color = GoldFoilHighlight.copy(alpha = 0.75f),
+                shape = RoundedCornerShape(40.dp)
+            )
+            .clickable(
+                interactionSource = interactionSource,
+                indication = null
+            ) {
+                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                onClick()
+            }
+            .let { if (testTag != null) it.testTag(testTag) else it }
+            .padding(horizontal = 20.dp, vertical = 10.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            if (showCrown) {
+                RoyalCrownIcon(
+                    modifier = Modifier.size(18.dp),
+                    tint = GoldFoilText
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+            }
+            Text(
+                text = text.uppercase(),
+                style = MaterialTheme.typography.labelLarge.copy(
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 12.5.sp,
+                    letterSpacing = 1.sp
+                ),
+                color = GoldFoilText,
+                maxLines = 1
             )
         }
     }

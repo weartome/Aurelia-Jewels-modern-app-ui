@@ -56,6 +56,7 @@ import com.example.domain.CommerceRules
 import com.example.domain.InrFormatter
 import com.example.ui.CartDisplayItem
 import com.example.ui.components.EmptyLuxuryState
+import com.example.ui.components.GoldShimmerClaimButton
 import com.example.ui.components.JewelleryPhoto
 import com.example.ui.components.LuxuryProductCard
 import com.example.ui.components.LuxuryTopBar
@@ -359,6 +360,23 @@ fun CartScreen(
                                     text = "Applied demo code: $appliedCouponCode",
                                     style = MaterialTheme.typography.bodySmall,
                                     color = ext.success
+                                )
+                            } else {
+                                Spacer(modifier = Modifier.height(10.dp))
+                                val suggestedCode = if (breakdown.subtotalInr >= 10_000L) "AURELIA10" else "HERITAGE5"
+                                val suggestedLabel = if (suggestedCode == "AURELIA10") {
+                                    "CLAIM 10% OFFER (AURELIA10)"
+                                } else {
+                                    "CLAIM 5% OFFER (HERITAGE5)"
+                                }
+                                GoldShimmerClaimButton(
+                                    text = suggestedLabel,
+                                    onClick = {
+                                        couponInput = suggestedCode
+                                        couponFeedback = onApplyCoupon(suggestedCode)
+                                    },
+                                    modifier = Modifier.fillMaxWidth(),
+                                    testTag = "cart_quick_claim_offer_btn"
                                 )
                             }
                         }
