@@ -15,6 +15,7 @@
   <img src="https://img.shields.io/badge/UI-Jetpack%20Compose%20%2B%20M3-27351A?style=flat-square" alt="Jetpack Compose Material 3" />
   <img src="https://img.shields.io/badge/Persistence-Room%20SQLite%202.7.0-AD853C?style=flat-square" alt="Room SQLite 2.7.0" />
   <img src="https://img.shields.io/badge/Build-Gradle%209.3.1%20%2B%20AGP%209.1.1-27351A?style=flat-square" alt="Gradle 9.3.1" />
+  <img src="https://img.shields.io/badge/License-MIT-AD853C?style=flat-square" alt="MIT License" />
 </p>
 
 ---
@@ -437,6 +438,7 @@ When moving from the offline Room demo to live Firebase cloud sync or Gemini AI 
 | Document | Description |
 | :--- | :--- |
 | [`README.md`](README.md) | Master project overview, architecture, setup, APK build & attribution |
+| [`LICENSE`](LICENSE) | MIT open-source license terms |
 | [`Docs/backend_prd.md`](Docs/backend_prd.md) | Backend architecture PRD, Customer vs. Admin separation, portable SQL schema & API contracts |
 | [`Docs/hosting_guide.md`](Docs/hosting_guide.md) | Free testing stacks (Firebase / Supabase / Vercel) vs. paid production hosting (Hostinger VPS / Pro tiers) |
 | [`docs/backend/INDEX.md`](docs/backend/INDEX.md) | Deep-dive backend documentation index |
@@ -449,7 +451,16 @@ When moving from the offline Room demo to live Firebase cloud sync or Gemini AI 
 
 ---
 
-## 17. Contributors & Ecosystem Attribution
+## 17. License & Public Repository Hygiene
+
+This project is distributed under the **MIT License**. See [`LICENSE`](LICENSE) for full terms.
+
+- **Public Repo Safety**: `.gitignore` explicitly blocks `.env` files, `google-services.json`, release `.jks` / `.keystore` signing keys, service-account JSON credentials, internal workspace metadata (`.aistudio/`, `.build-outputs/`), and raw chat upload files from being committed.
+- **Demo Data Only**: All customer addresses, concierge phone numbers, and emails inside the Android demo seed data are non-production placeholders.
+
+---
+
+## 18. Contributors, Founder & Ecosystem Attribution
 
 ### Contributors
 
@@ -457,17 +468,36 @@ When moving from the offline Room demo to live Firebase cloud sync or Gemini AI 
 - **Futures17** — [github.com/futures17](https://github.com/futures17)
 - **Aarush** — [github.com/aarushxox](https://github.com/aarushxox)
 
+### Founder Connect — Pranav Sahu
+
+| Channel | Official Link |
+| :--- | :--- |
+| Portfolio | [pranav005-portfolio.netlify.app](https://pranav005-portfolio.netlify.app/) |
+| HexAtom Showcase | [hexatom.imaginefuture1-7.workers.dev](https://hexatom.imaginefuture1-7.workers.dev/) |
+| LinkedIn | [linkedin.com/in/pranav-sahu-bb86b8234](https://www.linkedin.com/in/pranav-sahu-bb86b8234/) |
+| Devpost | [devpost.com/pranavsahu005](https://devpost.com/pranavsahu005) |
+| Instagram | [@the_future_of_explainer](https://www.instagram.com/the_future_of_explainer/) |
+| Facebook | [facebook.com/profile.php?id=100078424104712](https://www.facebook.com/profile.php?id=100078424104712) |
+
+### Wear Tome — Official Channels
+
+| Channel | Official Link |
+| :--- | :--- |
+| Website | [weartome.in](https://weartome.in) |
+| Instagram | [@wear_tome](https://www.instagram.com/wear_tome/) |
+| Facebook | [facebook.com/profile.php?id=100091375722751](https://www.facebook.com/profile.php?id=100091375722751) |
+| Pinterest | [in.pinterest.com/weartome](https://in.pinterest.com/weartome/) |
+
 ### Engineered & Curated by Pranav Raj Sahu — Hexatom Team / Aronar AI
 
 | Platform / Project | Official Link | Category |
 | :--- | :--- | :--- |
-| GitHub Repository (Reference) | [github.com/aarushxox/modern-clinic-neumorphism-dashboard](https://github.com/aarushxox/modern-clinic-neumorphism-dashboard) | Source Code |
-| Policies & Licensing | `POLICIES.md` · `LICENSE` | Usage Terms |
+| License | [`LICENSE` (MIT)](LICENSE) | Usage Terms |
 | Hexatom | [hexatom-org.vercel.app](https://hexatom-org.vercel.app) | Agency |
-| Hexatom Portfolio | [hexatom.imaginefuture1-7.workers.dev](https://hexatom.imaginefuture1-7.workers.dev) | Showcase |
+| Hexatom Portfolio | [hexatom.imaginefuture1-7.workers.dev](https://hexatom.imaginefuture1-7.workers.dev/) | Showcase |
 | Aronar AI | [aronar-ai.vercel.app](https://aronar-ai.vercel.app) | AI Venture |
 | Wear Tome | [weartome.in](https://weartome.in) | Streetwear Brand |
-| Pranav Sahu Portfolio | [pranav005-portfolio.netlify.app](https://pranav005-portfolio.netlify.app) | Founder |
+| Pranav Sahu Portfolio | [pranav005-portfolio.netlify.app](https://pranav005-portfolio.netlify.app/) | Founder |
 | Hexatom Fonts | [the-fonts-hexatom.pranavsahu005.workers.dev](https://the-fonts-hexatom.pranavsahu005.workers.dev) | Typography Tool |
 | Hexatom Colors | [hexatom-the-colors.base44.app](https://hexatom-the-colors.base44.app) | Color System Tool |
 | CREVR Media Flow | [crevr-media-flow.base44.app](https://crevr-media-flow.base44.app) | CREVR Tool |
@@ -477,6 +507,16 @@ When moving from the offline Room demo to live Firebase cloud sync or Gemini AI 
 ---
 
 <p align="center">
+  <a href="https://pranav005-portfolio.netlify.app/">Portfolio</a> &middot;
+  <a href="https://hexatom.imaginefuture1-7.workers.dev/">HexAtom</a> &middot;
+  <a href="https://www.linkedin.com/in/pranav-sahu-bb86b8234/">LinkedIn</a> &middot;
+  <a href="https://devpost.com/pranavsahu005">Devpost</a> &middot;
+  <a href="https://www.instagram.com/the_future_of_explainer/">Instagram</a> &middot;
+  <a href="https://www.facebook.com/profile.php?id=100078424104712">Facebook</a>
+</p>
+
+<p align="center">
   Copyright &copy; 2026 Pranav Raj Sahu &middot; Hexatom Team / Aronar AI. All Rights Reserved.<br />
+  Licensed under the <a href="LICENSE">MIT License</a> &middot; Last updated: November 2026<br />
   Built with Human Engineering + Google AI Studio, Gemini &amp; API Tooling.
 </p>
