@@ -105,9 +105,19 @@ flowchart TD
 
 ---
 
-## <img src="https://api.iconify.design/lucide/image.svg?color=%23AD853C" width="20" height="20" alt="" /> 3. Visual Asset Showcase
+## <img src="https://api.iconify.design/lucide/image.svg?color=%23AD853C" width="20" height="20" alt="" /> 3. Visual Showcase Gallery
 
-All 6 visual assets below are bundled inside `app/src/main/res/drawable/` and rendered live inside the application with photographic metal-finish grading. Live physical-device captures can be added to [`docs/screenshots/`](docs/screenshots/README.md) after installing the APK on an Android phone.
+### 3.1 Luxury UI Design Showcase
+
+> *Transparency note: The showcase below presents the core Aurelia Jewels design system across Splash, Home Discovery, Luxury Collection Grid, Product Detail, and the separated Admin Dashboard. Live physical-device captures can be added to [`docs/screenshots/`](docs/screenshots/README.md) after installing the APK on an Android phone.*
+
+<p align="center">
+  <img src="docs/screenshots/aurelia-app-showcase.jpg" alt="Aurelia Jewels Luxury App UI Showcase" width="100%" />
+</p>
+
+### 3.2 Bundled In-App Studio Photography & Brand Assets
+
+All 6 visual assets below are bundled inside `app/src/main/res/drawable/` and rendered live inside the application with photographic metal-finish grading:
 
 | App Emblem | Bridal Hero Banner | Gold Ring | Gold Necklace | Jhumka Earrings | Gold Bangle |
 | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -302,6 +312,7 @@ flowchart LR
 │   ├── CLIENT_HANDOFF.md                  # Non-developer APK export & client delivery guide
 │   ├── backend/                           # Deep-dive backend pack (INDEX, PRD, Hosting, Admin, API/DB)
 │   └── screenshots/
+│       ├── aurelia-app-showcase.jpg       # 5-screen editorial app UI showcase banner
 │       └── README.md                      # Guide for adding live device screenshots
 ├── app/
 │   ├── build.gradle.kts                   # Module build config, dependencies & signingConfigs
@@ -425,7 +436,7 @@ When moving from the offline Room demo to live Firebase cloud sync or Gemini AI 
 | **Admin Separation** | Isolated in-app `AdminDashboardScreen` for demo review | Disable demo admin flag in Play Store builds; deploy standalone web admin portal |
 | **Gold Rates** | Illustrative static demo reference figures | Connect Admin-updated `gold_rates` table or licensed bullion API |
 | **Bespoke AI Studio** | Clearly labeled placeholder concepts (`PlaceholderAiImageRepository`) | Provision Firebase AI Logic + App Check + per-user daily caps |
-| **Visual Captures** | 6 bundled brand & studio drawables verified in repo | Capture live phone screenshots after APK install and place in `docs/screenshots/` |
+| **Visual Captures** | 5-screen App UI Showcase + 6 bundled brand & studio drawables verified in repo | Capture live phone screenshots after APK install and place in `docs/screenshots/` |
 | **GitHub Actions CI** | Hardened workflow with JDK 21, SDK 36.1, Gradle 9.3.1, Robolectric mirror & APK signature check | Verify green checkmark on the next GitHub push |
 
 ---

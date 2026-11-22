@@ -1,6 +1,6 @@
 # Device Screenshots Directory
 
-The main `README.md` displays the 6 bundled brand and studio jewellery photography assets from `app/src/main/res/drawable/`.
+The main `README.md` displays the **Aurelia Jewels App UI Showcase** (`docs/screenshots/aurelia-app-showcase.jpg`) and the 6 bundled brand and studio jewellery photography assets from `app/src/main/res/drawable/`.
 
 Once you install `Aurelia-Jewels-debug.apk` on a physical Android phone, drop real device screenshots into this folder using these recommended filenames:
 
