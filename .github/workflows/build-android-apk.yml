@@ -1,0 +1,116 @@
+name: Build Aurelia Jewels Android APK
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    tags:
+      - "v*"
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+    inputs:
+      publish_release:
+        description: "Create a GitHub Release with direct APK download link"
+        required: false
+        default: false
+        type: boolean
+      release_tag:
+        description: "Release tag name (used only if Publish Release is checked)"
+        required: false
+        default: "v1.0.0-demo"
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  build-apk:
+    name: Test and Build Debug APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Accept Android SDK licenses and ensure SDK 36
+        run: |
+          SDKMANAGER="${ANDROID_HOME:-$ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager"
+          if [ -x "$SDKMANAGER" ]; then
+            yes | "$SDKMANAGER" --licenses > /dev/null || true
+            "$SDKMANAGER" "platforms;android-36" "build-tools;36.0.0" || true
+            "$SDKMANAGER" "platforms;android-36.1" || true
+          fi
+
+      - name: Set up Gradle 9.3.1
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "9.3.1"
+
+      - name: Prepare debug keystore
+        run: |
+          if [ ! -f debug.keystore ]; then
+            if [ -f debug.keystore.base64 ]; then
+              base64 -d debug.keystore.base64 > debug.keystore
+              echo "Decoded debug.keystore from debug.keystore.base64"
+            else
+              keytool -genkeypair -v \
+                -keystore debug.keystore \
+                -storepass android \
+                -alias androiddebugkey \
+                -keypass android \
+                -keyalg RSA \
+                -keysize 2048 \
+                -validity 10000 \
+                -dname "CN=Android Debug,O=Android,C=US"
+              echo "Generated fallback debug.keystore"
+            fi
+          fi
+
+      - name: Run unit tests
+        run: gradle :app:testDebugUnitTest --stacktrace
+
+      - name: Build Debug APK
+        run: gradle :app:assembleDebug --stacktrace
+
+      - name: Package APK for download
+        run: |
+          mkdir -p release-apk
+          cp app/build/outputs/apk/debug/app-debug.apk release-apk/Aurelia-Jewels-debug.apk
+          ls -lh release-apk/Aurelia-Jewels-debug.apk
+
+      - name: Upload Debug APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Aurelia-Jewels-APK
+          path: release-apk/Aurelia-Jewels-debug.apk
+          retention-days: 30
+          if-no-files-found: error
+
+      - name: Publish GitHub Release with direct APK download
+        if: startsWith(github.ref, 'refs/tags/v') || (github.event_name == 'workflow_dispatch' && inputs.publish_release == true)
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ startsWith(github.ref, 'refs/tags/v') && github.ref_name || inputs.release_tag }}
+          name: Aurelia Jewels Android Demo (${{ startsWith(github.ref, 'refs/tags/v') && github.ref_name || inputs.release_tag }})
+          body: |
+            Automated Android Debug APK build for **Aurelia Jewels**.
+
+            ### How to install on Android
+            1. Download `Aurelia-Jewels-debug.apk` from the Assets section below.
+            2. Open the downloaded file on your Android phone.
+            3. If prompted, enable **Install unknown apps** for your browser or file manager.
+            4. Tap **Install** and open **Aurelia Jewels**.
+
+            *Note: This is a local demo prototype using on-device Room SQLite storage. Payments are simulated and no live charges occur.*
+          files: release-apk/Aurelia-Jewels-debug.apk
+          prerelease: true

@@ -1,0 +1,6 @@
+{
+  "name": "Aurelia Jewels",
+  "description": "Luxury Indian fine jewellery shopping app with curated heritage collections, variant selection, bag, demo checkout, WhatsApp order sharing, and bespoke AI Design Studio.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

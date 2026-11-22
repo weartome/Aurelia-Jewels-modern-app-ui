@@ -1,0 +1,2515 @@
+
+# OPENCODE MASTER EXECUTION PROMPT
+# PROJECT: AURELIA JEWELS
+# PREMIUM INDIAN JEWELLERY SHOPPING MOBILE APPLICATION
+# REFERENCE-DRIVEN DESIGN + FUNCTIONAL REACT NATIVE APP
+# QUALITY STANDARD: WORLD-CLASS LUXURY COMMERCE
+# TARGET: ANDROID FIRST, IOS COMPATIBLE
+# PRIORITY: VISUAL FIDELITY, REAL USABILITY, SMOOTHNESS, CORRECTNESS
+
+## 0. YOUR ROLE AND MISSION
+
+You are OpenCode, acting as an elite product design and engineering team.
+
+Assume the combined responsibilities of:
+- Principal React Native Engineer
+- Luxury Jewellery Brand Art Director
+- Senior Mobile UI/UX Designer
+- Indian E-commerce Product Architect
+- Mobile Interaction and Animation Specialist
+- Accessibility Engineer
+- Software Quality Engineer
+- Visual QA Engineer
+
+Your mission is to BUILD an actual, runnable, premium jewellery shopping mobile application inspired closely by the five reference images supplied by the owner.
+
+The owner previously received a React web prototype that did not match the reference images and was not a real installable Android application.
+
+DO NOT REPEAT THAT FAILURE.
+
+This is an implementation task, not a request for a design description, theoretical architecture, Figma-only prototype, or set of generated mockup images.
+
+Deliver a functional React Native application with outstanding visual execution, realistic jewellery catalogue content, responsive native components, working shopping interactions, and a lightweight persistent demo data layer.
+
+The client has currently requested a UI-focused prototype, not a production payment or commerce backend.
+
+Spend engineering effort accordingly.
+
+### PRIMARY SUCCESS CONDITION
+
+When the owner launches the app on an Android phone, the interface should immediately resemble the visual sophistication of the supplied references.
+
+The result should feel like a luxury Indian jewellery brand commissioned an experienced international product design studio.
+
+It must not feel like:
+- A generic AI-generated app
+- A standard Expo starter template
+- A converted website
+- A Bootstrap-style storefront
+- A student project
+- A dashboard disguised as a shopping app
+- A set of disconnected static screens
+
+Design, build, inspect, test, correct, and deliver a complete mobile experience.
+
+Do not substitute screenshots or generated marketing boards for functional application screens.
+
+---
+
+## 1. OWNER REQUIREMENTS: NON-NEGOTIABLE
+
+Translate every requirement into implementation and verification.
+
+1. Build an actual React Native mobile shopping application.
+2. Android is the main target. Maintain iOS-compatible architecture.
+3. Use the provided reference screenshots as the strongest visual authority.
+4. Match their luxury typography, photography, composition, colour balance, spacing, component proportions, and overall presentation.
+5. Use a light luxury colour scheme. No dark theme is required.
+6. Use warm ivory, champagne, muted gold, natural beige, and restrained deep olive.
+7. No purple, neon, excessive gradients, glassmorphism, floating shapes, or generic AI design.
+8. No emojis anywhere in the application.
+9. Build compact and carefully proportioned mobile layouts.
+10. Keep interface text in simple English.
+11. Design primarily for Indian jewellery customers.
+12. Include gold, silver, brass, copper, and relevant fine jewellery materials.
+13. Include rings, bangles, necklaces, earrings, bracelets, mangalsutra, bridal collections, pendants, chains, anklets, and sets.
+14. Include homepage, category discovery, collection listing, product details, wishlist, cart, checkout, orders, profile, notifications, and support.
+15. Implement convincing product photography, not blank cards or poorly matched stock images.
+16. Use realistic illustrative INR pricing.
+17. Provide working search, filters, sorting, product selection, wishlist, cart, and demo ordering.
+18. Provide a small persistent demo data layer.
+19. Make products, images, prices, brand details, banners, and colours configurable.
+20. Include a simple admin/design editing interface without compromising customer-facing design.
+21. Provide a WhatsApp order-sharing experience.
+22. Keep payment simulation clearly separate from live payment processing.
+23. Use proper loading, empty, error, and success states.
+24. Make navigation, page transitions, scrolling, and taps smooth on ordinary Indian Android devices.
+25. Make buttons, sheets, search, filters, and interactions feel polished and immediate.
+26. Avoid unnecessary dependencies, oversized architecture, and premature production integrations.
+27. Read existing code before changing it.
+28. Fix root causes, not symptoms.
+29. Run actual tests and report honest results.
+30. Deliver runnable source code and, if supported by the environment, an installable Android development or preview build.
+
+Never state that something is completed unless its implementation exists and has been checked.
+
+---
+
+## 2. START BY INSPECTING THE PROJECT
+
+Before editing any file:
+
+1. Print the current project directory.
+2. Inspect the repository structure.
+3. Read package.json and existing configuration.
+4. Read AGENTS.md, CLAUDE.md, README.md, docs/PROJECT_BRIEF.md, and relevant project documentation if present.
+5. Examine existing screens, components, assets, navigation, data models, persistence, and backend functionality.
+6. Check for broken imports, unused UI, duplicate components, hardcoded product data, and unnecessary dependencies.
+7. Determine whether this is an existing React Native app, React web prototype, or empty project.
+8. Locate and inspect the owner's reference screenshots wherever available in the project or attached task context.
+
+If an existing implementation is working, preserve it unless it conflicts with the owner's requested final experience.
+
+If the repository is an unsuitable web-only prototype, do not simply wrap it in a WebView and call it a mobile app. Establish an appropriate React Native implementation while preserving useful data and business logic.
+
+If the references are not physically accessible inside the repository, clearly report this limitation. Use the detailed visual specification below rather than claiming to have inspected unavailable images.
+
+Record key assumptions and decisions in docs/PROJECT_BRIEF.md.
+
+Do not ask unnecessary questions. Use sensible defaults and continue.
+
+---
+
+## 3. REFERENCE IMAGES: CRITICAL VISUAL DIRECTION
+
+The owner has supplied five Pinterest-style jewellery UI references.
+
+These references are not optional inspiration.
+
+They define the desired quality, composition, layout behaviour, and product presentation.
+
+Study each carefully.
+
+### REFERENCE 1: MINIMAL FASHION JEWELLERY
+
+The first reference shows two elegant phones.
+
+Visual characteristics:
+
+- White or soft ivory backgrounds
+- Very thin, elegant brand header
+- High-fashion serif typography
+- Large product photography
+- Satin and fabric textures
+- Gold jewellery photographed with soft natural light
+- Minimal black buttons
+- Small thumbnails underneath the main product
+- Large editorial headings
+- Generous negative space
+- Refined, almost magazine-like composition
+
+What to reproduce:
+
+A strongly editorial product presentation.
+
+The product image should be the central visual element.
+
+Use large serif headlines, smaller supporting descriptions, and one clear purchase CTA.
+
+Avoid colourful ecommerce banners, cluttered badges, and heavy borders.
+
+### REFERENCE 2: WARM GOLD JEWELLERY COMMERCE
+
+The second reference shows a gold-oriented Indian jewellery app.
+
+Visual characteristics:
+
+- Warm golden-brown branding
+- Jewellery close-up photography
+- Elegant welcome screen
+- Compact search interface
+- Premium collection banners
+- Light content panels
+- Product categories represented by real jewellery photos
+- Gold-related information
+- Very compact bottom navigation
+- Small, carefully placed icons
+- Warm cream backgrounds
+
+What to reproduce:
+
+A premium Indian jewellery commerce experience rather than a generic fashion marketplace.
+
+The interface should communicate jewellery quality, material, and occasion.
+
+Use gold accents deliberately without making every section yellow.
+
+### REFERENCE 3: CLEAN MOBILE PRODUCT DISCOVERY
+
+The third reference shows a minimal jewellery product browser.
+
+Visual characteristics:
+
+- Light grey or off-white background
+- Rounded white product surfaces
+- Clear section hierarchy
+- Compact product cards
+- Jewellery isolated against minimal backgrounds
+- Clear category navigation
+- Product customisation controls
+- Strong visual emphasis on jewellery itself
+- Simple bottom navigation
+- Minimal high-contrast icons
+
+What to reproduce:
+
+A clean and extremely usable shopping flow.
+
+Use clear category discovery, neat two-column product grids, and compact product-detail customisation controls.
+
+Do not make the screen unnecessarily spacious or oversized.
+
+### REFERENCE 4: HIGH-FASHION DESKTOP JEWELLERY SITE
+
+This image is primarily a desktop luxury jewellery reference.
+
+Its influence should be aesthetic, not structural.
+
+Visual characteristics:
+
+- Oversized editorial serif typography
+- Monochromatic luxury photography
+- High-fashion art direction
+- Minimal navigation
+- Strong jewellery imagery
+- Editorial typography mixed with product commerce
+- Elegant whitespace
+- Distinct visual rhythm
+
+What to reproduce:
+
+The luxury editorial art direction.
+
+DO NOT reproduce its desktop navigation or desktop card structure inside the mobile app.
+
+### REFERENCE 5: MODERN JEWELLERY SHOPPING APP
+
+The fifth reference shows modern mobile commerce screens.
+
+Visual characteristics:
+
+- Clean top search area
+- Deep green brand treatment
+- Real product imagery
+- Small category image circles
+- Product gallery
+- Jewellery details
+- Material purity controls
+- Seller/contact information
+- Compact shopping actions
+- Mobile bottom navigation
+
+What to reproduce:
+
+A thoughtful balance between visually attractive jewellery photography and effortless shopping.
+
+### REFERENCE PRIORITY
+
+Use the references in this order:
+
+1. First image for luxury editorial typography and visual refinement.
+2. Second image for gold-focused Indian jewellery branding.
+3. Fifth image for realistic mobile shopping flow.
+4. Third image for compact product grids and detail controls.
+5. Fourth image for high-fashion editorial art direction.
+
+Do not combine every reference feature into a visually chaotic screen.
+
+Create one consistent design language.
+
+### REFERENCE COMPARISON REQUIREMENT
+
+Before finalising the app, capture actual screenshots from the implemented screens and compare them side by side with the available reference images.
+
+Inspect:
+- Typography
+- Image-to-text ratio
+- Product scale
+- Spacing
+- Background tones
+- Navigation density
+- Card styling
+- Colour restraint
+- Screen proportions
+- Overall perceived quality
+
+Fix substantial visual mismatches.
+
+Do not call the result reference-faithful without doing this comparison.
+
+---
+
+## 4. RESEARCH BEFORE IMPLEMENTATION
+
+Conduct focused research into established jewellery ecommerce brands and mobile UX.
+
+Research the current publicly available experiences of:
+
+- Cartier
+- Tiffany & Co.
+- Bvlgari
+- Tanishq
+- CaratLane
+- BlueStone
+- Senco Gold & Diamonds
+- Kalyan Jewellers
+
+Also consult credible mobile commerce UX guidance such as Baymard Institute, Material Design guidance, Android accessibility guidance, and official React Native/Expo documentation.
+
+Do not blindly copy another brand.
+
+Learn from:
+- Product photography
+- Editorial hierarchy
+- Trust placement
+- Category discovery
+- Product specifications
+- Product customisation
+- Cart information
+- Checkout friction reduction
+- Mobile navigation
+- Returning-customer flows
+- Loading behaviour
+
+Distinguish researched facts from your own design decisions.
+
+Keep the research concise and actionable.
+
+The owner values the finished application more than a long research document.
+
+Perform only the lookups that genuinely affect the implementation.
+
+---
+
+## 5. TECHNOLOGY AND PROJECT PROFILE
+
+Project Profile: RESTRAINED LUXURY NATIVE COMMERCE.
+
+Use restrained native motion, not a flashy animated marketing website.
+
+### Required stack
+
+Preferred implementation:
+
+- React Native
+- Expo
+- TypeScript in strict mode
+- Expo Router for navigation
+- React Native Reanimated for transitions
+- React Native Gesture Handler where gestures materially improve UX
+- Expo Image for optimised product images
+- Lucide React Native or similarly refined stroke icons
+- Zustand for small shared client state
+- TanStack Query only where asynchronous data management warrants it
+- Expo SQLite or a suitable persistence layer for demo products, cart, settings, wishlist, and orders
+- React Hook Form and schema validation for checkout and editing forms, if suitable
+- Expo Haptics for subtle touch feedback
+
+Use current compatible stable versions verified through official documentation.
+
+Do not install every library simply because it is listed.
+
+Choose the smallest technically appropriate combination.
+
+If the existing repository uses an equivalent well-structured technology stack, prefer compatible reuse over unnecessary rewriting.
+
+### Avoid
+
+- WebView-based fake native apps
+- Heavy scroll manipulation libraries
+- Unnecessary UI frameworks
+- Excessive full-screen animation
+- Large global state objects
+- Excessive abstraction
+- Microservices
+- Complex cloud infrastructure
+- Duplicate state sources
+- CSS-in-JS workarounds that compromise native performance
+
+If using Expo, the result must run through the documented Expo Android workflow.
+
+Deliver an installable build only when a build environment and credentials permit it.
+
+Never label source code or an Expo Go session as an APK.
+
+---
+
+## 6. BRAND IDENTITY AND ART DIRECTION
+
+Working brand name:
+
+AURELIA JEWELS
+
+This is a configurable demonstration brand, not the client's confirmed legal or commercial brand.
+
+Provide a central setting for replacing it.
+
+### Brand personality
+
+- Timeless
+- Refined
+- Indian heritage
+- Contemporary femininity
+- Quiet luxury
+- Trustworthy
+- Elegant
+- Warm
+- Premium without arrogance
+
+The app should feel expensive because of proportion, art direction, craftsmanship, and restraint.
+
+Not because every button is gold.
+
+### Colour system
+
+Use the following as starting design tokens, then tune them against reference screenshots.
+
+Primary background:
+#FAF7F2
+
+Secondary background:
+#F3EDE5
+
+Card surface:
+#FFFFFF
+
+Soft champagne:
+#EADCC9
+
+Muted antique gold:
+#AD853C
+
+Primary deep olive:
+#27351A
+
+Deep warm brown:
+#36271F
+
+Main text:
+#211C17
+
+Secondary text:
+#756D64
+
+Hairline borders:
+#E6DDD2
+
+Error:
+#A13B32
+
+Success:
+#335E3B
+
+Do not force every token into every screen.
+
+The most frequent visual colours should be ivory, white, elegant warm neutrals, and natural product photography.
+
+Olive and gold should be deliberate accents.
+
+No purple.
+
+No neon.
+
+No saturated colourful card backgrounds.
+
+No dark mode toggle in this version.
+
+### Typography
+
+Choose two complementary premium font families.
+
+Suggested direction:
+
+Display:
+Cormorant Garamond, Bodoni Moda, or a comparably elegant licensed serif.
+
+Interface:
+DM Sans, Manrope, or another refined, highly legible sans-serif.
+
+Use actual licensed font files when available.
+
+Implement fallback fonts correctly.
+
+Do not use default system typography for all screens.
+
+Do not apply decorative serif type to tiny labels, buttons, and prices.
+
+Suggested hierarchy:
+
+Hero headline: 34-42
+Major page title: 26-32
+Section title: 21-25
+Product name: 15-17
+Body: 14-16
+Metadata: 12-13
+Price: 17-22
+Bottom navigation: 10-12
+
+Sizes are in logical mobile units and must be tuned visually.
+
+Body copy must remain legible. Do not shrink text simply to fit more cards.
+
+### Shape language
+
+Use:
+- Crisp image frames
+- Moderate corner rounding
+- Elegant rectangular primary buttons
+- Very restrained shadows
+- Thin dividers
+- Clean image cropping
+- Subtle border treatments
+
+Suggested radii:
+- Product image: 10-14
+- Product card: 12-16
+- Primary CTA: 10-12
+- Input fields: 10-12
+- Modal sheets: 18-22
+
+Do not use huge pill cards everywhere.
+
+Do not default to bubble-like neumorphism.
+
+### Icons
+
+Use consistent thin stroke icons with balanced size.
+
+Typical size:
+18-22
+
+Navigation icons:
+20-22
+
+Icons should be recognisable and accessible.
+
+Never use emojis as icons.
+
+### Logo
+
+Create a premium typographic brand lockup.
+
+Wordmark:
+AURELIA
+
+Supporting:
+JEWELS
+
+Optionally use a small, restrained original monogram.
+
+Do not imitate or reuse the trademarks or monograms of Cartier, Gucci, Prada, Tiffany, or another brand.
+
+Avoid generic crown logos.
+
+Keep the logo crisp at small mobile dimensions.
+
+---
+
+## 7. JEWELLERY PHOTOGRAPHY: A MAJOR REQUIREMENT
+
+The jewellery images must be visually excellent.
+
+Do not build an otherwise beautiful UI with irrelevant product images.
+
+The owner's references use premium jewellery macro photography.
+
+Follow that direction.
+
+### Desired photography characteristics
+
+- High-resolution detail
+- Accurate-looking metal texture
+- Soft studio lighting
+- Natural shadows
+- Warm ivory surfaces
+- Silk, satin, stone, or subtle textured backgrounds
+- Distinct jewellery silhouettes
+- Correct jewellery proportions
+- Refined highlights
+- No excessive glare
+- No plastic-looking gold
+- No impossible floating jewellery
+- No random hands
+- No text baked into jewellery images
+- No unrelated fashion photography
+
+### Product photography types
+
+Use:
+1. Isolated jewellery product photograph
+2. Product on warm stone or satin
+3. Lifestyle close-up
+4. Bridal editorial image
+5. Detail/macro crop
+
+### Asset sourcing
+
+First inspect the existing project's assets.
+
+Reuse the owner's actual product photographs wherever present.
+
+If suitable source assets are unavailable, source properly licensed representative imagery from trustworthy providers or generate clearly illustrative demo catalogue assets if image generation is available.
+
+Do not scrape copyrighted brand catalogues and redistribute their product images without permission.
+
+Record asset provenance or generation method.
+
+Do not claim demo images depict real inventory.
+
+### Image performance
+
+Use optimised local assets or a proper caching strategy.
+
+Provide suitable image dimensions.
+
+Use correct aspect ratios.
+
+Prefetch important images when helpful.
+
+Avoid decoding huge images during scrolling.
+
+Prevent layout shifts, flashing, stretched jewellery, and crop errors.
+
+### Product image composition
+
+In grid cards:
+- Product must be clearly visible
+- Maintain consistent background language
+- Do not crop jewellery edges
+- Jewellery should occupy a balanced portion of the card
+
+On product details:
+- Use much larger product imagery
+- Allow gallery navigation
+- Optional pinch-to-zoom if it works reliably
+- Use thumbnails or understated position indicators
+
+### Critical
+
+A beautiful app with poor product imagery is still a failed result.
+
+Treat image quality as a core design requirement.
+
+---
+
+## 8. DESIGN SYSTEM AND COMPONENT ARCHITECTURE
+
+Implement reusable components.
+
+Expected component categories:
+
+- AppHeader
+- LuxuryWordmark
+- ScreenContainer
+- SafeAreaLayout
+- BottomNavigation
+- SearchField
+- SearchSuggestions
+- EditorialHero
+- HeroCarousel
+- JewelleryCategory
+- CategoryThumbnail
+- CollectionCard
+- ProductCard
+- ProductGrid
+- ProductGallery
+- ProductPrice
+- ProductMetalBadge
+- PuritySelector
+- RingSizeSelector
+- BangleSizeSelector
+- QuantityStepper
+- WishlistButton
+- PrimaryButton
+- SecondaryButton
+- IconButton
+- FilterSheet
+- SortSheet
+- CartItem
+- CartSummary
+- DeliveryAddressCard
+- PaymentMethodRow
+- OrderStatusTimeline
+- EmptyState
+- LoadingSkeleton
+- ToastFeedback
+- ConfirmDialog
+- BottomSheet
+- NotificationRow
+- AccountMenuRow
+- ContactAction
+- FormField
+
+These names are illustrative.
+
+Choose the smallest maintainable structure that avoids duplicated styling and logic.
+
+Put tokens in a central theme module.
+
+Put product data behind a repository/data-service boundary.
+
+Avoid scattered hardcoded colours, prices, and image paths.
+
+---
+
+## 9. COMPLETE SCREEN-BY-SCREEN IMPLEMENTATION
+
+Build the following actual mobile screens.
+
+Every screen must have functional navigation and appropriate states.
+
+### SCREEN 01: SPLASH
+
+Design:
+
+Deep olive or warm editorial photography.
+
+Elegant Aurelia Jewels wordmark.
+
+Small original decorative brand element if suitable.
+
+No loading spinner unless genuinely necessary.
+
+Short native-feeling opening.
+
+Respect reduced-motion settings.
+
+Automatically continue to the appropriate app route.
+
+Splash must not delay entry unnecessarily.
+
+### SCREEN 02: INTRO / ONBOARDING
+
+Two or three carefully designed slides.
+
+Content themes:
+
+1. Heritage in Every Piece
+2. Jewellery for Every Occasion
+3. Crafted to Be Cherished
+
+Use premium editorial imagery.
+
+Keep text short and meaningful.
+
+Actions:
+- Next
+- Skip
+- Explore Collection
+
+Persist onboarding completion.
+
+Avoid repeatedly showing onboarding on every launch.
+
+### SCREEN 03: HOME
+
+This is the most important screen.
+
+It must communicate premium quality within the first few seconds.
+
+Layout structure:
+
+Top:
+- Safe area
+- Minimal brand wordmark
+- Wishlist or notification entry
+- Shopping bag icon
+- Cart quantity badge when applicable
+
+Under header:
+- Compact luxury search field
+
+Hero:
+- Beautiful jewellery-focused photograph
+- Editorial display headline
+- Short copy
+- Clear Explore Collection CTA
+- Small carousel indicators
+- Automatic rotation with sensible timing
+- Manual swipe support
+- Pause or reset timing after user interaction
+- No aggressive fast-moving carousel
+
+Below hero:
+- Shop by Category
+- Carefully selected category thumbnails
+- Featured Collection
+- Best Sellers
+- Shop by Metal
+- Occasion Edit
+- New Arrivals
+- One premium editorial brand story section
+
+Use purposeful variation between sections.
+
+Do not stack eight identical card carousels.
+
+Category examples:
+- Rings
+- Earrings
+- Necklaces
+- Bangles
+- Bracelets
+- Mangalsutra
+- Pendants
+- Bridal Sets
+
+Metal discovery:
+- Gold
+- Silver
+- Brass
+- Copper
+- Rose Gold, only where products support it
+
+Occasions:
+- Wedding
+- Engagement
+- Festive
+- Everyday
+- Gifting
+
+Product cards should show:
+- Jewellery image
+- Product name
+- Starting or actual price
+- Material/purity when relevant
+- Wishlist icon
+
+Avoid:
+- Giant banners
+- Tiny unreadable text
+- Excessive promotional labels
+- Too many competing CTAs
+- Visually noisy category blocks
+
+The home screen should look like a luxury jewellery showroom.
+
+### SCREEN 04: CATEGORY DIRECTORY
+
+Design a premium category index.
+
+Use large jewellery photography and elegant category names.
+
+Two-column grid where appropriate.
+
+Categories must be discoverable without excessive scrolling.
+
+Each category tile should open the correct product listing.
+
+Include categories for Indian jewellery.
+
+### SCREEN 05: COLLECTION / PRODUCT LISTING
+
+Top:
+- Back
+- Category title
+- Product count
+- Search
+- Filter
+- Sort
+
+Product grid:
+Two columns.
+
+Each product:
+- High-quality image
+- Product name
+- INR price
+- Material/purity
+- Wishlist control
+
+Filters:
+- Category
+- Metal
+- Purity
+- Price range
+- Occasion
+- Availability
+- Ring/bangle size where applicable
+
+Sorting:
+- Recommended
+- Price low to high
+- Price high to low
+- Newest
+- Name
+
+Only provide sort choices that the data layer supports.
+
+Filters should work together.
+
+Provide:
+- Clear filters
+- Apply filters
+- Visible active filter indicators
+- No-results message
+- Reset action
+
+Do not use fake filter controls.
+
+### SCREEN 06: PRODUCT DETAILS
+
+This screen must be especially polished.
+
+Use the jewellery as the hero.
+
+Top:
+- Back
+- Wishlist
+- Share
+
+Product image gallery:
+- Large imagery
+- Smooth transitions
+- Clear gallery position
+- Supporting image thumbnails where appropriate
+
+Information:
+- Product name
+- SKU
+- Price in INR
+- Material
+- Purity
+- Weight, if known
+- Available options
+- Size
+- Short product description
+
+Product options:
+- Metal variant
+- Ring size
+- Bangle size
+- Quantity
+
+Only show controls relevant to the product.
+
+Do not show ring sizing on necklaces.
+
+Include a size guide when needed.
+
+Trust information:
+- Material information
+- Delivery estimate as demo or calculated from available information
+- Returns policy information
+- Care instructions
+
+Do not assert BIS hallmarking, verified reviews, certifications, guaranteed purity, or insured shipping for unverified demo products.
+
+Where demonstration data is used, clearly label it.
+
+Bottom:
+- Sticky Add to Bag action
+- Buy Now action where appropriate
+- Price visible without clutter
+
+Behaviour:
+- Validate required size choices
+- Update gallery correctly
+- Update price when variants have real configured price differences
+- Prevent adding unavailable variants
+- Provide feedback when item is added
+- Keep all content scrollable
+
+### SCREEN 07: SEARCH
+
+Implement a functional search experience.
+
+When focused:
+- Open a clean search screen
+- Auto-focus input
+- Show recent searches when available
+- Display relevant product results
+- Support category and material keywords
+- Handle empty search
+- Handle no matches
+
+Avoid unnecessary full-screen transitions for simple search interactions.
+
+Keep typing fluid.
+
+### SCREEN 08: WISHLIST
+
+Display saved products.
+
+Support:
+- Add to wishlist
+- Remove from wishlist
+- Open product
+- Add to bag when options are already valid
+- Empty state
+- Persistent favourites
+
+Use a beautiful, compact two-column or list layout.
+
+No fake saved products by default unless explicitly seeded as a demo state.
+
+### SCREEN 09: SHOPPING BAG
+
+Design a minimal luxury checkout-preparation experience.
+
+Each item shows:
+- Product image
+- Product name
+- Selected material
+- Selected size
+- Unit price
+- Quantity
+- Item total
+- Remove action
+
+Behaviour:
+- Increase quantity
+- Decrease quantity
+- Remove items
+- Update totals
+- Preserve data after app restart
+- Prevent impossible quantity changes
+- Handle empty bag
+
+Price summary:
+- Subtotal
+- Discount if valid
+- Delivery charge if configured
+- Grand total
+
+Use Indian INR formatting.
+
+Provide Proceed to Checkout.
+
+No fake coupon success.
+
+If coupon UI is included, implement actual demo validation and total recalculation.
+
+### SCREEN 10: CHECKOUT
+
+Use a short, understandable checkout.
+
+Recommended steps:
+1. Delivery
+2. Payment method
+3. Review
+
+Guest checkout must be supported.
+
+Do not require account creation just to place a demo order.
+
+Address fields:
+- Full name
+- Phone number
+- Address line 1
+- Address line 2 optional
+- Landmark optional
+- City
+- State
+- PIN code
+
+Validate:
+- Required fields
+- Indian phone number format
+- Six-digit Indian PIN code
+- Field lengths
+- Invalid or empty inputs
+
+Keep entered data on validation errors.
+
+Allow saved demo addresses.
+
+Provide delivery method options only when implemented.
+
+Keep the order summary available.
+
+### SCREEN 11: PAYMENT METHOD
+
+This is DEMO PAYMENT UI.
+
+Show a clean payment selection interface.
+
+Example choices:
+- UPI
+- Debit / Credit Card
+- Net Banking
+- Cash on Delivery, if permitted by demo configuration
+
+However:
+
+DO NOT collect real card numbers, CVV, passwords, or UPI PINs.
+
+DO NOT pretend to charge the customer.
+
+DO NOT claim a successful real payment.
+
+Selecting UPI or card can show an explicitly labelled demonstration flow.
+
+Use a CTA such as:
+"Place Demo Order"
+
+Include subtle text:
+"Demo checkout. No payment will be collected."
+
+If a production-ready gateway is not configured, no payment gateway is active.
+
+### SCREEN 12: ORDER SUCCESS
+
+After a valid demo checkout:
+
+Generate a genuine locally unique order ID.
+
+Store the order persistently.
+
+Show:
+- Order placed
+- Order ID
+- Order summary
+- Demo order status
+- Delivery address
+- Total
+- Payment method selection
+- Track Order
+- Continue Shopping
+
+Do not show fabricated delivery dates or shipping confirmations as real facts.
+
+Use tasteful visual feedback.
+
+No excessive confetti.
+
+### SCREEN 13: MY ORDERS
+
+Display saved demo orders.
+
+Status examples:
+- Placed
+- Processing
+- Shipped
+- Delivered
+- Cancelled
+
+Only advance statuses when driven by actual demo state transitions or explicit editing.
+
+Do not randomly mark orders shipped.
+
+Support:
+- Order history
+- Order details
+- Order items
+- Price summary
+- Reorder or add items to cart, where valid
+
+Provide an informative empty state.
+
+### SCREEN 14: ORDER TRACKING
+
+Show an elegant vertical progress timeline.
+
+Use actual stored demo status.
+
+Potential stages:
+- Order Placed
+- Processing
+- Shipped
+- Out for Delivery
+- Delivered
+
+Do not fabricate courier tracking numbers or carrier locations.
+
+Clearly indicate demo tracking information.
+
+### SCREEN 15: ACCOUNT
+
+Build a beautiful customer dashboard.
+
+Top:
+- Profile identity
+- Guest or demo-user status
+- Profile editing
+
+Menu:
+- My Orders
+- Wishlist
+- Delivery Addresses
+- Notifications
+- Help & Support
+- Contact Us
+- Privacy
+- Terms
+- About the Brand
+
+Do not show fake account membership levels or reward points as actual entitlements.
+
+If you implement a demo profile, label it clearly.
+
+Do not implement fake authentication screens that imply a secure production login.
+
+### SCREEN 16: NOTIFICATIONS
+
+Create a functional notification centre.
+
+Include local demo notification types:
+- Order created
+- Order updated
+- New collection
+- Promotional announcement
+
+Only populate events supported by the application.
+
+Support:
+- Unread badge
+- Mark read
+- Mark all read
+- Open relevant screen
+- Empty state
+
+Persist read/unread state.
+
+No fabricated live customer activity.
+
+### SCREEN 17: CONTACT AND SUPPORT
+
+Provide a clean support page.
+
+Include configurable:
+- Store WhatsApp number
+- Contact email
+- Phone number
+- Store address if supplied
+
+Actions:
+- WhatsApp
+- Call
+- Email
+- View store details
+
+Use native deep linking.
+
+Only display valid configured contact information.
+
+Never invent client contact details.
+
+### SCREEN 18: JEWELLERY GUIDE
+
+A lightweight optional informational screen.
+
+Explain:
+- Gold karat
+- Silver purity
+- Basic jewellery care
+- Ring sizing
+- Bangle sizing
+- Material selection
+
+Keep descriptions accurate and simple.
+
+Avoid claims about individual products that are not supported by their data.
+
+### SCREEN 19: GOLD RATE INFORMATION
+
+The references include gold pricing.
+
+If implementing this screen, create a refined gold-rate display with small, clean charts and concise values.
+
+However, do not invent live prices.
+
+Without an authenticated live provider:
+- Use illustrative sample data
+- Label it "Demo Rates"
+- Show no misleading real-time timestamp
+- Do not imply a live connection
+
+Keep this feature secondary to jewellery shopping.
+
+Do not make a trading dashboard.
+
+### SCREEN 20: ADMIN / DESIGN STUDIO
+
+The owner wants the app's look and catalogue to be customisable.
+
+Provide a separate, clearly labelled demo design studio.
+
+It should not clutter the customer homepage.
+
+Support editing:
+- Brand display name
+- Logo asset
+- Primary and accent colours
+- Hero images
+- Hero headings
+- Collection banners
+- Product photos
+- Product names
+- Product descriptions
+- Prices
+- Categories
+- Materials
+- Purity
+- Sizes
+- Stock availability
+- Featured product order
+- Contact details
+- WhatsApp business number
+- Shipping configuration
+
+Support:
+- Create product
+- Edit product
+- Delete product with confirmation
+- Replace product image
+- Edit collection
+- Reorder featured content where reasonably supported
+- Reset demo configuration
+
+Changes must persist after application restart.
+
+The storefront must reflect saved changes.
+
+For demo builds, make studio access an explicitly designated developer/demo mode.
+
+Do not claim a client-side hidden PIN provides production admin security.
+
+For production, this would require proper server-side authentication and RBAC.
+
+---
+
+## 10. NAVIGATION REQUIREMENTS
+
+Use native-feeling navigation with Expo Router or an appropriate existing router.
+
+Suggested bottom navigation:
+
+HOME
+SHOP
+WISHLIST
+ORDERS
+ACCOUNT
+
+Cart should remain accessible from the header and appropriate purchase screens.
+
+Avoid overcrowding the bottom navigation with six or seven tabs.
+
+Bottom navigation must:
+- Respect Android safe areas
+- Remain readable
+- Highlight the active tab
+- Use precise icons
+- Not overlap app content
+- Avoid being duplicated on checkout/payment screens
+- Support Android hardware back navigation correctly
+
+Subpages should have a consistent header and back action.
+
+All visible navigation controls must work.
+
+No dead buttons.
+
+No placeholder navigation routes.
+
+---
+
+## 11. INTERACTION QUALITY AND SMOOTHNESS
+
+Smoothness is a top-level requirement.
+
+The owner specifically wants the perceived quality of a high-end luxury commerce app.
+
+Implement motion with restraint.
+
+### Target interactions
+
+- Smooth native screen transitions
+- Smooth product image transitions
+- Responsive wishlist toggles
+- Natural bottom sheet presentation
+- Smooth carousel swiping
+- Immediate button feedback
+- Subtle press-scale feedback
+- Minimal tactile haptic feedback
+- Smooth quantity changes
+- Stable cart re-rendering
+- Smooth scrolling
+- Predictable back navigation
+- Stable search typing
+- Correct keyboard dismissal
+
+Prefer native scrolling.
+
+Do not add Lenis, browser smooth-scroll libraries, or web-specific animation packages to a React Native application.
+
+Use Reanimated only where it adds meaningful interaction quality.
+
+Use native primitives when they are already smooth.
+
+### Motion guidelines
+
+Typical tap feedback:
+80-140 ms
+
+Small component transitions:
+140-220 ms
+
+Screen transitions:
+180-300 ms
+
+Bottom sheet:
+220-320 ms
+
+These are design starting points, not mandatory timings.
+
+Use motion curves appropriate to the interaction.
+
+Avoid bouncy, toy-like animations.
+
+Avoid parallax overload.
+
+Avoid fake loading delays.
+
+### Performance
+
+Optimise for ordinary Indian Android phones, not only flagship devices.
+
+Target smooth interaction and scrolling, ideally around 60 FPS on supported hardware.
+
+Use:
+- Stable list keys
+- Memoisation only where justified
+- Virtualised lists for larger product collections
+- Correct image sizing
+- Lazy rendering
+- Image caching
+- Efficient state subscriptions
+- Minimal unnecessary renders
+
+Do not animate layout-heavy properties on every frame when transforms or opacity can achieve the same effect.
+
+Respect reduced-motion accessibility settings.
+
+---
+
+## 12. HUMAN-CENTRED SHOPPING UX
+
+Use proven interaction principles without overengineering.
+
+### Recognition over recall
+
+A customer should recognise the next action without memorising how the app works.
+
+### Minimal choices
+
+Show the most relevant purchase decisions first.
+
+Do not make customers choose ten irrelevant configurations.
+
+### Progressive disclosure
+
+Show additional technical jewellery details when customers ask for them.
+
+### Clear purchase information
+
+Customers should understand:
+- What they are buying
+- Material
+- Purity where applicable
+- Product price
+- Quantity
+- Size
+- Delivery charges
+- Total price
+
+### Feedback
+
+Every meaningful action should produce visible feedback.
+
+Examples:
+- Product saved
+- Added to bag
+- Quantity updated
+- Filter applied
+- Address saved
+- Demo order placed
+- Product unavailable
+
+### Error prevention
+
+Prevent:
+- Missing ring size
+- Invalid address
+- Empty cart checkout
+- Quantity below one
+- Unsupported product variant
+- Accidental order duplication
+- Multiple simultaneous checkout submissions
+
+### Trust
+
+Never make false claims about:
+- Hallmark certification
+- Product authenticity
+- Customer ratings
+- Product reviews
+- Delivery guarantees
+- Refund eligibility
+- Payment success
+
+Use client-provided or verifiable information only.
+
+### Checkout simplicity
+
+Reduce typing.
+
+Preserve data.
+
+Offer guest checkout.
+
+Use appropriate mobile keyboards.
+
+Avoid unexpected navigation.
+
+Keep the primary action obvious.
+
+---
+
+## 13. INDIAN JEWELLERY PRODUCT DATA
+
+Seed a realistic demonstration catalogue.
+
+Target approximately 24-36 distinct demo products, enough to make all categories, filters, search, recommendations, and cart behaviour meaningful.
+
+Example categories:
+
+1. Gold Rings
+2. Silver Rings
+3. Diamond-Style Rings
+4. Gold Bangles
+5. Silver Bangles
+6. Traditional Earrings
+7. Jhumka Earrings
+8. Gold Necklaces
+9. Bridal Necklace Sets
+10. Mangalsutra
+11. Bracelets
+12. Pendants
+13. Chains
+14. Anklets
+15. Brass Jewellery
+16. Copper Jewellery
+
+Use natural, believable names.
+
+Examples:
+- Floral Gold Ring
+- Classic Gold Band
+- Heritage Jhumka Earrings
+- Royal Gold Bangle
+- Pearl Drop Earrings
+- Traditional Bridal Necklace
+- Minimal Silver Bracelet
+- Copper Heritage Cuff
+- Everyday Gold Pendant
+- Traditional Mangalsutra
+
+Avoid generic names like Product 1.
+
+### Required product data
+
+Each product should have:
+
+- Unique ID
+- SKU
+- Name
+- Slug or stable route identifier
+- Description
+- Category
+- Collection
+- Material
+- Purity where applicable
+- Price in minor units or otherwise safe numeric representation
+- Optional original price when a genuine demo discount is configured
+- Images
+- Available variants
+- Size options
+- Stock quantity or availability
+- Featured flag
+- New-arrival flag
+- Created/updated timestamps for demo persistence
+
+Optional:
+- Weight
+- Care instructions
+- Occasion
+- Tags
+- Related products
+
+### Pricing
+
+Use INR formatting.
+
+Examples:
+₹24,900
+₹38,500
+₹1,24,000
+
+These are demonstration prices.
+
+Do not treat prices as live gold-market valuations.
+
+Avoid misleading live-rate calculations.
+
+Use consistent pricing logic throughout cart and checkout.
+
+Never rely on formatted price strings for arithmetic.
+
+---
+
+## 14. DEMO DATA LAYER AND BACKEND BOUNDARY
+
+The client currently wants the UI.
+
+Therefore, do not waste most of the project budget constructing a production commerce backend.
+
+Build a lightweight, credible demo architecture.
+
+Recommended approach:
+
+- Typed data models
+- Product repository
+- Cart repository
+- Order repository
+- Wishlist repository
+- Settings repository
+- Notifications repository
+- Persistent local storage
+
+If an existing working API is present, examine and reuse it when appropriate.
+
+Do not replace a working backend unnecessarily.
+
+### Required persistence
+
+Persist:
+- Products
+- Product edits
+- Brand configuration
+- Cart items
+- Wishlist
+- Addresses
+- Demo orders
+- Notification state
+- Onboarding completion
+
+### Architecture boundary
+
+UI components should not directly depend on hardcoded mock arrays.
+
+Provide a small repository or service layer that can later be replaced by real API calls.
+
+Document the future API contracts.
+
+Do not introduce a large server simply for the appearance of backend complexity.
+
+### Order validation
+
+Validate cart items and selected product variants before placing a demo order.
+
+Calculate totals from authoritative stored catalogue data.
+
+Snapshot product names, selected variants, and prices into the saved order so later catalogue edits do not rewrite historical order amounts.
+
+Ensure order placement is idempotent against accidental double-taps.
+
+Store order state reliably.
+
+### Edge cases
+
+Handle:
+- Product deleted after being added to cart
+- Product price changed
+- Product out of stock
+- Missing variant
+- Empty catalogue
+- Missing photo
+- Invalid settings
+- App restart during checkout
+- Repeated button taps
+- Storage errors
+- Duplicate IDs
+
+Use appropriate recovery states.
+
+---
+
+## 15. WHATSAPP ORDER FLOW
+
+Implement a useful WhatsApp order handoff.
+
+The business WhatsApp number must be configurable.
+
+When a demo order is placed, give the customer a button:
+
+"Send Order on WhatsApp"
+
+Prepare a properly formatted message containing:
+
+- Brand name
+- Order ID
+- Customer name
+- Product names
+- Selected size/material
+- Quantities
+- Item amounts
+- Order total
+- Delivery city or address as appropriate
+- Customer contact information with consent
+- Demo order clarification when applicable
+
+URL-encode the message correctly.
+
+Open WhatsApp using the supported deep-link approach.
+
+Handle WhatsApp not being installed.
+
+Provide a reasonable fallback such as sharing or opening a supported web URL.
+
+Never silently send a message.
+
+Never claim automatic WhatsApp delivery.
+
+A prefilled WhatsApp chat requires the user to press Send.
+
+Automatic business notifications would require a separate WhatsApp Business Platform integration, proper authorization, and approved message handling.
+
+Do not implement unofficial WhatsApp automation.
+
+Do not expose customer address or phone data in analytics or logs.
+
+---
+
+## 16. ACCESSIBILITY AND MOBILE RELIABILITY
+
+Implement:
+
+- Safe-area handling
+- Android status bar integration
+- Android back button behaviour
+- Keyboard-safe layouts
+- Minimum 44-unit touch targets where practicable
+- Accessible labels
+- Correct screen-reader names
+- Text scaling support
+- Visible focus where relevant
+- Colour contrast suitable for WCAG 2.2 AA
+- Reduced-motion handling
+- Correct loading states
+- Correct empty states
+- Offline-friendly demo browsing
+- Helpful error messages
+
+Gold accent text must not become unreadable on cream backgrounds.
+
+Do not use tiny grey labels simply to look luxurious.
+
+Test narrow screens and larger text settings.
+
+Prevent horizontal overflow.
+
+Ensure the bottom CTA never sits behind the Android navigation system.
+
+Test at least these logical device widths:
+
+- 360
+- 390
+- 412
+- 430
+
+Also inspect one tablet-width layout if practical.
+
+The main target remains a compact phone experience.
+
+---
+
+## 17. DATA AND PRIVACY SAFETY
+
+This is a UI prototype.
+
+Avoid production-security claims.
+
+Do not:
+- Collect card credentials
+- Store CVV
+- Store passwords in plaintext
+- Fake OTP verification
+- Fake successful payment responses
+- Include real private API keys
+- Hardcode sensitive client details
+- Log customer personal information
+- Present demo accounts as genuinely authenticated users
+
+Use `.env.example` for any configuration that may later be environment-specific.
+
+Keep secrets out of the mobile bundle.
+
+If a future production backend is needed, document:
+- Real authentication
+- API validation
+- Order authorization
+- Admin RBAC
+- Payment verification
+- Webhooks
+- Audit logs
+- Rate limiting
+- Inventory consistency
+- Server-side calculations
+- Data deletion
+- Privacy and legal review
+
+Do not prematurely build all of those services for a UI demonstration.
+
+---
+
+## 18. VISUAL COMPONENT REFINEMENT
+
+The owner strongly dislikes ordinary AI-generated interface patterns.
+
+Pay special attention to these details.
+
+### Headers
+
+Keep headers compact.
+
+Do not use giant toolbar regions.
+
+Wordmark, page heading, back control, and actions should align precisely.
+
+### Product cards
+
+Choose a consistent image aspect ratio.
+
+Do not put jewellery inside random colourful blocks.
+
+Use subtle card shadows only if they improve separation.
+
+Keep names, prices, and metadata balanced.
+
+### Buttons
+
+Primary CTAs should be visually strong.
+
+Do not make every action a solid gold button.
+
+Use secondary outlines or understated text actions.
+
+Buttons must have loading, disabled, pressed, and active states.
+
+### Bottom sheets
+
+Use for filters, sorting, selecting options, and short forms.
+
+Handle keyboard interaction.
+
+Support clear dismissal.
+
+Avoid nested scrolling conflicts.
+
+### Cart
+
+Make totals easy to scan.
+
+Do not overdecorate quantity controls.
+
+### Checkout
+
+Avoid promotional clutter.
+
+Display progress and the next step clearly.
+
+### Forms
+
+Use visible labels, sensible defaults, proper keyboard types, and inline validation.
+
+### Empty states
+
+Create elegant layouts with useful CTAs.
+
+No random cartoon graphics.
+
+No emojis.
+
+### Product loading
+
+Use restrained image placeholders or skeletons.
+
+Avoid flashing the entire screen between route changes.
+
+### Microcopy
+
+Use plain English.
+
+Examples:
+- Explore Collection
+- Shop Rings
+- View Details
+- Add to Bag
+- Continue to Checkout
+- Save Address
+- Place Demo Order
+- View My Orders
+- Contact the Store
+
+Avoid generic AI marketing phrases.
+
+---
+
+## 19. ADMIN CUSTOMISATION ARCHITECTURE
+
+The client should be able to change the storefront without editing UI components.
+
+Use a central configuration structure, for example:
+
+BrandConfig:
+- name
+- tagline
+- logo
+- colors
+- typography references
+- contact information
+- WhatsApp number
+
+HomeConfig:
+- hero slides
+- featured categories
+- featured collections
+- product ordering
+- editorial sections
+
+ProductConfig:
+- product details
+- image references
+- prices
+- variants
+- stock
+- visibility
+
+StoreConfig:
+- currency
+- shipping options
+- checkout options
+- policy references
+
+Implement a simple demo studio with persistent edits.
+
+Ensure:
+- Changes appear immediately after saving
+- Screens consume configuration consistently
+- Invalid colour values are rejected
+- Missing photos have graceful fallback
+- Product deletion updates affected views
+- Theme customisation maintains readable contrast
+- Reset works reliably
+- Customer shopping views remain visually unchanged until configuration is edited
+
+Do not overbuild a multi-tenant admin SaaS.
+
+---
+
+## 20. PROJECT STRUCTURE
+
+Use a maintainable feature-oriented structure.
+
+An example:
+
+app/
+  onboarding/
+  (tabs)/
+  product/
+  category/
+  checkout/
+  orders/
+  support/
+  studio/
+
+src/
+  components/
+    common/
+    navigation/
+    jewellery/
+    commerce/
+    feedback/
+
+  features/
+    home/
+    catalogue/
+    search/
+    wishlist/
+    cart/
+    checkout/
+    orders/
+    account/
+    notifications/
+    studio/
+
+  data/
+    repositories/
+    seed/
+    migrations/
+
+  domain/
+    models/
+    validation/
+    pricing/
+
+  store/
+
+  theme/
+    colors.ts
+    typography.ts
+    spacing.ts
+    shadows.ts
+
+  hooks/
+  utils/
+  assets/
+
+docs/
+  PROJECT_BRIEF.md
+  DESIGN_SYSTEM.md
+  SCREEN_MAP.md
+  QA_REPORT.md
+  FUTURE_BACKEND.md
+
+README.md
+
+Adapt this to the actual project.
+
+Do not create meaningless directories or files.
+
+Avoid one giant App.tsx containing the entire application.
+
+Keep the code readable and modular.
+
+---
+
+## 21. IMPLEMENTATION ORDER
+
+Follow this sequence.
+
+### PHASE 1: REPOSITORY AUDIT
+
+Inspect the code and documentation.
+
+Find current implementation problems.
+
+Confirm the actual technology stack.
+
+Identify reusable work.
+
+Record assumptions.
+
+### PHASE 2: VISUAL DIRECTION
+
+Inspect all available reference images.
+
+Research relevant luxury jewellery designs.
+
+Define:
+- Brand mood
+- Colour tokens
+- Font pairing
+- Image language
+- Layout density
+- Navigation conventions
+- Product card design
+- Button system
+- Motion system
+
+Produce a concise visual specification.
+
+### PHASE 3: APP FOUNDATION
+
+Set up:
+- TypeScript
+- Expo routing
+- Theme tokens
+- Typography
+- Assets
+- Persistence
+- Repository layer
+- Navigation
+- Error handling
+
+Ensure the application starts before building every screen.
+
+### PHASE 4: CORE PREMIUM UI
+
+Build these first:
+
+1. Splash
+2. Onboarding
+3. Home
+4. Categories
+5. Product listing
+6. Product detail
+
+These screens determine whether the design meets the owner's visual expectations.
+
+Do not move on with an obviously generic or unfinished design.
+
+Compare screenshots with the references.
+
+### PHASE 5: SHOPPING EXPERIENCE
+
+Build:
+
+1. Search
+2. Wishlist
+3. Bag
+4. Checkout
+5. Payment selection
+6. Order success
+7. Orders
+8. Tracking
+
+Wire complete state transitions.
+
+### PHASE 6: CUSTOMER EXPERIENCE
+
+Build:
+
+1. Account
+2. Addresses
+3. Notifications
+4. Contact support
+5. WhatsApp order handoff
+6. Jewellery guide
+7. Optional demo gold rates
+
+### PHASE 7: DESIGN STUDIO
+
+Implement product, asset, colour, and contact editing.
+
+Verify persistence.
+
+### PHASE 8: ANIMATION AND REFINEMENT
+
+Polish navigation, taps, galleries, sheets, forms, image loading, and list performance.
+
+Remove animation that makes the experience slower.
+
+### PHASE 9: TESTING
+
+Run real tests.
+
+Fix observed failures.
+
+Check regressions.
+
+### PHASE 10: DELIVERY
+
+Prepare run instructions, honest QA results, screenshots, and a runnable project.
+
+If feasible, generate and verify an installable Android build.
+
+Do not claim an APK exists until the file actually exists.
+
+---
+
+## 22. TESTING AND ACCEPTANCE
+
+Testing must not be theoretical.
+
+### Functional tests
+
+Verify:
+- App launches
+- Onboarding completes
+- Home opens
+- Categories navigate
+- Product listing loads
+- Product detail opens
+- Product options work
+- Search finds matching products
+- Filters work
+- Sorting works
+- Wishlist persists
+- Cart adds items
+- Cart removes items
+- Quantity updates totals
+- Checkout validates address
+- Demo order creation works
+- Order persists after restart
+- Order history is correct
+- Notifications update
+- WhatsApp message is correctly composed
+- Admin product edits persist
+- Brand theme edits persist
+
+### Logic tests
+
+Test:
+- INR formatting
+- Price arithmetic
+- Variant validation
+- Quantity validation
+- Empty checkout
+- Invalid address
+- Product deletion
+- Catalogue updates
+- Duplicate order submission
+- Storage failures
+- Filter combinations
+
+### Visual tests
+
+Capture and inspect screenshots of:
+- Splash
+- Onboarding
+- Home top
+- Home scrolled
+- Categories
+- Product listing
+- Product detail
+- Wishlist
+- Cart
+- Checkout
+- Payment selection
+- Account
+- Notifications
+
+Compare screenshots to the provided references.
+
+Check:
+- Font rendering
+- Product image quality
+- Card proportion
+- Jewellery cropping
+- Spacing
+- Text truncation
+- Icon placement
+- Contrast
+- Navigation alignment
+- Sticky buttons
+- Bottom safe area
+- Empty states
+
+### Performance tests
+
+Inspect:
+- Scroll performance
+- Product grid performance
+- Repeated screen navigation
+- Image loading
+- Rapid wishlist toggles
+- Rapid quantity changes
+- Search responsiveness
+- App memory use where measurable
+
+Record actual measurements only when measured.
+
+### Build checks
+
+Run the appropriate:
+- Type check
+- Lint
+- Unit tests
+- Component tests
+- Expo validation
+- Android launch/build checks
+- Import/source scans
+
+Read the command output.
+
+Fix errors instead of suppressing them.
+
+If a test cannot run because of missing emulator access, tool availability, or dependencies, record NOT RUN with the real reason.
+
+Never label an unperformed test PASS.
+
+---
+
+## 23. STRICT VISUAL FAILURE CONDITIONS
+
+The implementation fails the owner's brief if:
+
+- It looks like a generic React Native template.
+- It is only a responsive website.
+- It produces only screenshots or design mockups.
+- It has no working shopping flow.
+- It lacks beautiful jewellery imagery.
+- Product photos are visibly poor or irrelevant.
+- Typography does not communicate luxury.
+- Cards are too large or poorly proportioned.
+- Product cards have inconsistent image crops.
+- The homepage feels like an ordinary ecommerce marketplace.
+- Screens have empty buttons.
+- Navigation is confusing.
+- Animations are unnecessarily flashy.
+- Dark mode dominates.
+- Purple gradients or neon colours appear.
+- Emojis are used.
+- Product prices are inconsistent.
+- Checkout pretends to process real money.
+- Cart changes disappear unexpectedly.
+- Admin changes do not persist.
+- Android safe areas are broken.
+- App screens visibly overflow.
+- The agent reports verification without actual execution.
+
+---
+
+## 24. VISUAL QUALITY SELF-REVIEW
+
+Before calling the work finished, critique it like a demanding luxury brand art director.
+
+Ask:
+
+1. Would this feel appropriate for a serious premium jewellery brand?
+2. Does the first screen immediately communicate jewellery?
+3. Is the photography good enough for a luxury storefront?
+4. Is the typography clearly more elegant than standard ecommerce apps?
+5. Are colour accents restrained?
+6. Is the homepage visually distinctive?
+7. Do product images receive enough attention?
+8. Are the product cards compact without being difficult to read?
+9. Does every screen feel designed by the same team?
+10. Can a first-time customer complete a demo purchase easily?
+11. Does the app perform well on a modest Android phone?
+12. Are all interactions genuinely implemented?
+13. Are any sections generic filler?
+14. Are product descriptions credible?
+15. Are visual elements consistent with the reference images?
+16. Have I confused luxury with unnecessary decoration?
+17. Is the shopping experience simpler and more polished than the previous failed prototype?
+
+If a screen fails these questions, improve it.
+
+Do not settle for functional but mediocre.
+
+---
+
+## 25. OUTPUT AND DELIVERY
+
+At the end, provide:
+
+### A. REQUIREMENTS MET
+
+List major implemented requirements.
+
+### B. APPLICATION STRUCTURE
+
+Explain the main folders and architecture.
+
+### C. FILES CREATED OR MODIFIED
+
+List actual significant files.
+
+### D. HOW TO RUN
+
+Provide exact commands for:
+- Installing dependencies
+- Starting the development environment
+- Launching Android
+- Building an APK or development build if the environment supports it
+
+Only document commands that are valid for this repository.
+
+### E. SCREENSHOTS
+
+Provide actual screenshots captured from the running app, if a suitable runtime is available.
+
+Do not use generated concept art as proof of implementation.
+
+### F. TEST RESULTS
+
+Use PASS, FAIL, or NOT RUN.
+
+For each, include:
+- Command or procedure
+- Actual result
+- Any unresolved issue
+
+### G. DEMO LIMITATIONS
+
+Explicitly identify:
+- Demo payment
+- Demo products
+- Demo pricing
+- Demo order tracking
+- Local persistence
+- Any unverified features
+- Missing production integrations
+
+### H. FUTURE BACKEND PLAN
+
+Briefly describe how to add:
+- Real customer authentication
+- Production product database
+- Secure admin access
+- Inventory management
+- Verified pricing
+- Payment gateway
+- WhatsApp Business messaging
+- Real notifications
+- Shipping and tracking
+- Secure order management
+
+Do not implement these production features unless needed for the current UI demo or required by the existing project.
+
+### I. FINAL SELF-REVIEW
+
+Explain what you improved during visual and functional QA.
+
+Avoid claiming perfection.
+
+Be specific.
+
+---
+
+## 26. GLOBAL ENGINEERING, DESIGN AND MEDIA STANDARD
+
+Follow these rules throughout implementation.
+
+### Engineering
+
+- Read before editing.
+- Prefer root-cause fixes.
+- Preserve working code.
+- Avoid duplicate components.
+- Keep architecture proportional.
+- Use strong typing.
+- Validate data at meaningful boundaries.
+- Never expose secrets.
+- Handle failures.
+- Avoid fake integrations.
+- Keep dependencies justified.
+- Document material decisions.
+- Run tests and regression checks.
+- Do not mark unverified work complete.
+
+### Design
+
+- Reference first.
+- Luxury through restraint.
+- Distinctive typography.
+- Excellent imagery.
+- Compact mobile proportions.
+- Purposeful spacing.
+- Consistent iconography.
+- One primary action per context.
+- Responsive touch interactions.
+- Accessible contrast.
+- Clear navigation.
+- No generic AI patterns.
+- No emojis.
+- No dark or purple theme.
+- No decorative clutter.
+
+### Media
+
+- Use authentic or appropriately licensed jewellery imagery.
+- Never present illustrative demo products as verified client inventory.
+- Preserve original owner-provided product photos.
+- Optimise display assets.
+- Avoid image distortion.
+- Ensure a consistent visual grade.
+- Record provenance when using external assets.
+- Do not copy protected brand logos or visual assets.
+
+### Quality
+
+- Test realistically.
+- Distinguish verified from assumed.
+- Avoid hiding unresolved defects.
+- Maintain working navigation.
+- Prevent regression.
+- Keep customer data safe.
+- Report actual build results.
+
+---
+
+## 27. THE MOST IMPORTANT INSTRUCTION
+
+The owner has already rejected a previous attempt because it did not resemble the Pinterest references.
+
+Do not prioritise the quantity of screens over visual quality.
+
+Do not spend most of the time writing plans.
+
+Do not build generic interfaces simply to complete a checklist.
+
+Do not return a proposal instead of code.
+
+The target is an actual mobile application combining:
+
+THE EDITORIAL ELEGANCE OF LUXURY JEWELLERY BRANDS
++
+THE PRACTICAL SHOPPING FLOW OF A STRONG E-COMMERCE APP
++
+THE CULTURAL AND PRODUCT RELEVANCE OF INDIAN JEWELLERY
++
+THE SMOOTHNESS OF A WELL-ENGINEERED REACT NATIVE APPLICATION.
+
+The user should open the homepage and immediately recognise the style of the supplied references.
+
+The user should be able to navigate categories, inspect jewellery, select variants, save products, add items to the bag, complete a demo order, view order history, and share an order through WhatsApp.
+
+The application should remain attractive, responsive, maintainable, and honestly presented as a prototype.
+
+Treat the visual implementation as important as functionality.
+
+Treat functionality as important as visual implementation.
+
+Do not compromise one to fake the other.
+
+START NOW.
+
+First inspect the repository and available reference images, then execute the implementation plan.
+
+Continue through design, code, testing, corrections, and delivery.
+
+Produce the best complete result that the available environment supports, and clearly disclose anything that remains unverified.
