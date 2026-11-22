@@ -758,7 +758,7 @@ private fun AdminAnalyticsTab(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = "Analytics Note: Figures above are computed live from local Room SQLite tables on this device. Multi-customer cohort analytics will connect once the standalone cloud backend (Docs/backend_prd.md) is provisioned.",
+                    text = "Analytics Note: Figures above are computed live from local Room SQLite tables on this device. Multi-customer cohort analytics will connect once the standalone cloud backend (docs/backend_prd.md) is provisioned.",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(14.dp)

@@ -10,21 +10,24 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Platform-Android%20(API%2024--36)-27351A?style=flat-square" alt="Android API 24 to 36" />
-  <img src="https://img.shields.io/badge/Language-Kotlin%202.4.21-AD853C?style=flat-square" alt="Kotlin 2.4.21" />
-  <img src="https://img.shields.io/badge/UI-Jetpack%20Compose%20%2B%20M3-27351A?style=flat-square" alt="Jetpack Compose Material 3" />
-  <img src="https://img.shields.io/badge/Persistence-Room%20SQLite%202.7.0-AD853C?style=flat-square" alt="Room SQLite 2.7.0" />
-  <img src="https://img.shields.io/badge/Build-Gradle%209.3.1%20%2B%20AGP%209.1.1-27351A?style=flat-square" alt="Gradle 9.3.1" />
-  <img src="https://img.shields.io/badge/License-MIT-AD853C?style=flat-square" alt="MIT License" />
+  <a href="https://github.com/weartome/Aurelia-Jewels-modern-app-ui/actions/workflows/build-android-apk.yml">
+    <img src="https://github.com/weartome/Aurelia-Jewels-modern-app-ui/actions/workflows/build-android-apk.yml/badge.svg" alt="Build Aurelia Jewels Android APK" />
+  </a>
+  <img src="https://img.shields.io/badge/Android-API%2024--36.1-27351A?style=flat-square&logo=android&logoColor=FAF7F2" alt="Android API 24 to 36.1" />
+  <img src="https://img.shields.io/badge/Kotlin-2.4.21-AD853C?style=flat-square&logo=kotlin&logoColor=FAF7F2" alt="Kotlin 2.4.21" />
+  <img src="https://img.shields.io/badge/Jetpack%20Compose-Material%203-27351A?style=flat-square&logo=jetpackcompose&logoColor=FAF7F2" alt="Jetpack Compose Material 3" />
+  <img src="https://img.shields.io/badge/Room%20SQLite-2.7.0-AD853C?style=flat-square&logo=sqlite&logoColor=FAF7F2" alt="Room SQLite 2.7.0" />
+  <img src="https://img.shields.io/badge/Gradle-9.3.1%20%2B%20AGP%209.1.1-27351A?style=flat-square&logo=gradle&logoColor=FAF7F2" alt="Gradle 9.3.1 and AGP 9.1.1" />
+  <img src="https://img.shields.io/badge/License-MIT-AD853C?style=flat-square&logo=opensourceinitiative&logoColor=FAF7F2" alt="MIT License" />
 </p>
 
 ---
 
-## 1. Project Overview
+## <img src="https://api.iconify.design/lucide/gem.svg?color=%23AD853C" width="20" height="20" alt="" /> 1. Project Overview
 
 **Aurelia Jewels** (`com.aistudio.aureliajewels.kxmprq`) is a native Android luxury Indian jewellery shopping application engineered around a warm editorial heritage aesthetic. The application delivers an offline-first commerce experience powered by **Room SQLite**, adaptive Material 3 layouts, Indian numbering INR currency formatting, an animated metallic gold foil **Best Offer & Festive Sale** showcase, filterable luxury product grids, high-resolution product detail views with **WhatsApp Share**, persistent wishlist and bag management, 3-step guest checkout, and a cleanly separated **Admin Dashboard** (`Order Management`, `Product Inventory`, and `User Analytics`).
 
-### Visual Identity & Design Tokens
+### <img src="https://api.iconify.design/lucide/palette.svg?color=%23AD853C" width="18" height="18" alt="" /> Visual Identity & Design Tokens
 
 | Role | Token | Hex | Usage |
 | :--- | :--- | :--- | :--- |
@@ -39,7 +42,7 @@ Typography pairs **Cormorant Garamond** (editorial serif headings and wordmark) 
 
 ---
 
-## 2. System Architecture & Infographics
+## <img src="https://api.iconify.design/lucide/layers.svg?color=%23AD853C" width="20" height="20" alt="" /> 2. System Architecture & Infographics
 
 ### 2.1 Layered Android & Future Cloud Separation Architecture
 
@@ -102,19 +105,9 @@ flowchart TD
 
 ---
 
-## 3. Visual Showcase Gallery
+## <img src="https://api.iconify.design/lucide/image.svg?color=%23AD853C" width="20" height="20" alt="" /> 3. Visual Asset Showcase
 
-### 3.1 12-Screen Luxury UI Design Showcase
-
-> *Transparency note: The board below presents the 12-screen Aurelia Jewels design system and core shopping journey. Live physical-device captures can be added to [`docs/screenshots/`](docs/screenshots/README.md) after installing the APK on an Android phone.*
-
-<p align="center">
-  <img src="public/assets/aistudio/Aurelia_Jewels_Luxury_App_Showcase_a3e5fbb6.png" alt="Aurelia Jewels 12-Screen Luxury App Showcase" width="100%" />
-</p>
-
-### 3.2 Bundled In-App Studio Photography & Brand Assets
-
-All 6 visual assets below are bundled inside `app/src/main/res/drawable/` and rendered live inside the app with photographic metal-finish grading:
+All 6 visual assets below are bundled inside `app/src/main/res/drawable/` and rendered live inside the application with photographic metal-finish grading. Live physical-device captures can be added to [`docs/screenshots/`](docs/screenshots/README.md) after installing the APK on an Android phone.
 
 | App Emblem | Bridal Hero Banner | Gold Ring | Gold Necklace | Jhumka Earrings | Gold Bangle |
 | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -122,7 +115,7 @@ All 6 visual assets below are bundled inside `app/src/main/res/drawable/` and re
 
 ---
 
-## 4. Public Modules & Feature Matrix
+## <img src="https://api.iconify.design/lucide/layout-grid.svg?color=%23AD853C" width="20" height="20" alt="" /> 4. Public Modules & Feature Matrix
 
 ### 4.1 Customer-Facing Modules
 
@@ -146,7 +139,7 @@ All 6 visual assets below are bundled inside `app/src/main/res/drawable/` and re
 
 ---
 
-## 5. Product Flow
+## <img src="https://api.iconify.design/lucide/git-branch.svg?color=%23AD853C" width="20" height="20" alt="" /> 5. Product Flow
 
 ```mermaid
 flowchart LR
@@ -166,7 +159,7 @@ flowchart LR
 
 ---
 
-## 6. Relational Data Schema & Entity Model (ERD)
+## <img src="https://api.iconify.design/lucide/database.svg?color=%23AD853C" width="20" height="20" alt="" /> 6. Relational Data Schema & Entity Model (ERD)
 
 All 8 entities below are registered in `AureliaDatabase.kt` (`aurelia_jewels_demo.db`, Room 2.7.0):
 
@@ -250,7 +243,7 @@ erDiagram
 
 ---
 
-## 7. Mind Map
+## <img src="https://api.iconify.design/lucide/network.svg?color=%23AD853C" width="20" height="20" alt="" /> 7. Mind Map
 
 ```mermaid
 mindmap
@@ -272,16 +265,17 @@ mindmap
       8 Room SQLite Entities
       29 Seeded Indian Jewellery SKUs
       INR Formatter & Coupon Engine
-      Unit Tests (JUnit + Coroutines)
+      Unit Tests (JUnit + Robolectric)
     Delivery & Future Cloud
       GitHub Actions Auto-APK CI
+      Autonomous Windows Build Runbook
       Backend PRD & API Spec
       Free vs Paid Hosting Roadmap
 ```
 
 ---
 
-## 8. Team Flow
+## <img src="https://api.iconify.design/lucide/workflow.svg?color=%23AD853C" width="20" height="20" alt="" /> 8. Team Flow
 
 ```mermaid
 flowchart LR
@@ -290,22 +284,21 @@ flowchart LR
     PUSH --> CI["GitHub Actions CI (JDK 21 + Gradle 9.3.1)"]
     CI --> APK["Auto-Built Aurelia-Jewels-debug.apk (Artifact / Release)"]
     APK --> UAT["Client Phone Install & Feedback"]
-    UAT --> PHASE2["Phase 2 Backend Execution (Docs/backend_prd.md)"]
+    UAT --> PHASE2["Phase 2 Backend Execution (docs/backend_prd.md)"]
 ```
 
 ---
 
-## 9. Project Structure
+## <img src="https://api.iconify.design/lucide/folder-tree.svg?color=%23AD853C" width="20" height="20" alt="" /> 9. Project Structure
 
 ```text
 .
 ├── .github/
 │   └── workflows/
 │       └── build-android-apk.yml          # Automated unit tests, Debug APK artifact & optional Release
-├── Docs/
-│   ├── backend_prd.md                     # Architecture PRD, Admin separation, SQL schema & API contracts
-│   └── hosting_guide.md                   # Free testing vs paid production hosting comparison
 ├── docs/
+│   ├── backend_prd.md                     # Architecture PRD, Admin separation, SQL schema & API contracts
+│   ├── hosting_guide.md                   # Free testing vs paid production hosting comparison
 │   ├── CLIENT_HANDOFF.md                  # Non-developer APK export & client delivery guide
 │   ├── backend/                           # Deep-dive backend pack (INDEX, PRD, Hosting, Admin, API/DB)
 │   └── screenshots/
@@ -334,25 +327,27 @@ flowchart LR
 │       │       ├── font/                  # Cormorant Garamond & DM Sans (.ttf)
 │       │       └── values/                # strings.xml, colors.xml, themes.xml
 │       └── test/java/com/example/
-│           └── AureliaCommerceRulesTest.kt # 8 verified JVM unit tests
+│           ├── AureliaCommerceRulesTest.kt # 8 verified JVM unit tests
+│           ├── ExampleRobolectricTest.kt   # Robolectric Android resource verification test
+│           └── ExampleUnitTest.kt          # Baseline JVM unit test
 ├── gradle/
 │   ├── libs.versions.toml                 # Centralized Version Catalog
 │   └── wrapper/gradle-wrapper.properties  # Gradle 9.3.1 distribution config
-├── public/assets/aistudio/
-│   └── Aurelia_Jewels_Luxury_App_Showcase_a3e5fbb6.png
+├── ANTIGRAVITY_APK_BUILD.md               # Autonomous Windows PowerShell APK build runbook
 ├── debug.keystore.base64                  # Base64-encoded debug signing key for CI & local builds
 ├── .env.example                           # Secrets plugin placeholder
 ├── .gitignore                             # Standard Android ignore rules
 ├── build.gradle.kts
 ├── gradle.properties
+├── LICENSE
 └── settings.gradle.kts
 ```
 
 ---
 
-## 10. Get the APK Automatically via GitHub Actions (No Android Studio Needed)
+## <img src="https://api.iconify.design/lucide/package-check.svg?color=%23AD853C" width="20" height="20" alt="" /> 10. Get the APK Automatically via GitHub Actions (No Android Studio Needed)
 
-This repository includes `.github/workflows/build-android-apk.yml` to compile and test the Android APK automatically in the cloud:
+This repository includes `.github/workflows/build-android-apk.yml` to compile, unit-test, and sign the Android APK automatically in the cloud:
 
 1. Push this project to your GitHub repository.
 2. Open the **Actions** tab -> click the latest **Build Aurelia Jewels Android APK** run (2-4 minutes).
@@ -361,21 +356,23 @@ This repository includes `.github/workflows/build-android-apk.yml` to compile an
 
 ---
 
-## 11. Prerequisites for Android Development
+## <img src="https://api.iconify.design/lucide/cpu.svg?color=%23AD853C" width="20" height="20" alt="" /> 11. Prerequisites for Android Development
 
 - **Android Studio**: Meerkat / Narwhal or newer (supporting **AGP 9.1.1** and **Gradle 9.3.1**)
 - **Java Development Kit (JDK)**: **JDK 21** (Temurin / OpenJDK 21 recommended)
-- **Android SDK Components**: Platform **API 36** (`compileSdk 36`, `minorApiLevel = 1`), Build-Tools **36.x**, Platform-Tools
+- **Android SDK Components**: Platform **API 36.1** (`compileSdk 36`, `minorApiLevel = 1`), Build-Tools **36.0.0**, Platform-Tools
 - **Git** and an Android physical phone (API 24+) or AVD emulator
 
 ---
 
-## 12. Cloning, Setting Up & Building the APK in Android Studio
+## <img src="https://api.iconify.design/lucide/terminal.svg?color=%23AD853C" width="20" height="20" alt="" /> 12. Cloning, Setting Up & Building Locally (or via Antigravity)
+
+> For autonomous Windows build execution with **Antigravity**, see [`ANTIGRAVITY_APK_BUILD.md`](ANTIGRAVITY_APK_BUILD.md) for machine-executable PowerShell verification, 12GB RAM tuning, and signature checks.
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/<your-username>/<your-repo-name>.git
-   cd <your-repo-name>
+   git clone https://github.com/weartome/Aurelia-Jewels-modern-app-ui.git
+   cd Aurelia-Jewels-modern-app-ui
    ```
 2. **Decode the Debug Keystore once** (`debug.keystore` is gitignored; `debug.keystore.base64` is tracked):
    ```bash
@@ -383,7 +380,7 @@ This repository includes `.github/workflows/build-android-apk.yml` to compile an
    base64 -d debug.keystore.base64 > debug.keystore
 
    # Windows PowerShell
-   [IO.File]::WriteAllBytes("debug.keystore", [Convert]::FromBase64String((Get-Content -Raw "debug.keystore.base64")))
+   [IO.File]::WriteAllBytes("debug.keystore", [Convert]::FromBase64String((Get-Content -Raw "debug.keystore.base64").Trim()))
    ```
 3. **Open in Android Studio** -> select the root folder -> verify Gradle JDK is **JDK 21** -> wait for Gradle Sync.
 4. **Generate the APK via Build Menu**:
@@ -391,13 +388,13 @@ This repository includes `.github/workflows/build-android-apk.yml` to compile an
    - Click **locate** when complete to open `app/build/outputs/apk/debug/app-debug.apk`.
 5. **CLI Equivalent**:
    ```bash
-   gradle :app:testDebugUnitTest
+   gradle :app:testDebugUnitTest -Drobolectric.dependency.repo.url=https://maven-central.storage-download.googleapis.com/maven2
    gradle :app:assembleDebug
    ```
 
 ---
 
-## 13. Connecting Firebase in the Future (Optional)
+## <img src="https://api.iconify.design/lucide/flame.svg?color=%23AD853C" width="20" height="20" alt="" /> 13. Connecting Firebase in the Future (Optional)
 
 When moving from the offline Room demo to live Firebase cloud sync or Gemini AI image generation:
 
@@ -405,42 +402,43 @@ When moving from the offline Room demo to live Firebase cloud sync or Gemini AI 
 2. Place `google-services.json` inside `app/`.
 3. Uncomment the pre-configured dependencies in `app/build.gradle.kts` (`firebase-bom`, `firebase-ai`, `firebase-firestore`, `firebase-auth`, `credentials`, `firebase-appcheck-*`).
 4. Swap `PlaceholderAiImageRepository` in `AiImageRepository.kt` with a `Firebase.ai.generativeModel(...)` implementation targeting `gemini-3-pro-image-preview`.
-5. For full SQL vs. Firebase trade-offs and strict standalone Admin separation, see [`Docs/backend_prd.md`](Docs/backend_prd.md) and [`Docs/hosting_guide.md`](Docs/hosting_guide.md).
+5. For full SQL vs. Firebase trade-offs and strict standalone Admin separation, see [`docs/backend_prd.md`](docs/backend_prd.md) and [`docs/hosting_guide.md`](docs/hosting_guide.md).
 
 ---
 
-## 14. Non-Negotiables
+## <img src="https://api.iconify.design/lucide/shield-check.svg?color=%23AD853C" width="20" height="20" alt="" /> 14. Non-Negotiables
 
 - **Brand Restraint**: Strictly warm luxury Indian editorial palette (`#FAF7F2`, `#F3EDE5`, `#EADCC9`, `#AD853C`, `#27351A`). No neon, no purple slop, no emojis in UI or docs.
 - **Strict Customer vs. Admin Separation**: Production deployments must isolate store administration into a standalone web portal with server-side RBAC — never trust client-side role checks or client-supplied prices.
 - **Zero Hardcoded Secrets**: Never commit `.env`, API keys, or release `.jks` keystores to Git (enforced by `.gitignore`).
 - **Honest Demo Boundaries**: Never claim live payment collection, BIS hallmark certification, or live bullion feeds in an offline prototype.
-- **Verified Engineering**: Every change compiles via Gradle and preserves unit test coverage (`AureliaCommerceRulesTest`).
+- **Verified Engineering**: Every change compiles via Gradle and preserves unit test coverage (`AureliaCommerceRulesTest`, `ExampleRobolectricTest`, `ExampleUnitTest`).
 
 ---
 
-## 15. Current Limits (Do Not Overclaim)
+## <img src="https://api.iconify.design/lucide/alert-circle.svg?color=%23AD853C" width="20" height="20" alt="" /> 15. Current Limits (Do Not Overclaim)
 
 | Area | Current Verified State | What Is Required for Production |
 | :--- | :--- | :--- |
-| **Database & Sync** | Local on-device Room SQLite (`aurelia_jewels_demo.db`) | Provision cloud backend per [`Docs/backend_prd.md`](Docs/backend_prd.md) |
+| **Database & Sync** | Local on-device Room SQLite (`aurelia_jewels_demo.db`) | Provision cloud backend per [`docs/backend_prd.md`](docs/backend_prd.md) |
 | **Payments** | Simulated demo checkout confirmation only | Integrate Razorpay / Cashfree with server-verified HMAC webhooks |
 | **Admin Separation** | Isolated in-app `AdminDashboardScreen` for demo review | Disable demo admin flag in Play Store builds; deploy standalone web admin portal |
 | **Gold Rates** | Illustrative static demo reference figures | Connect Admin-updated `gold_rates` table or licensed bullion API |
 | **Bespoke AI Studio** | Clearly labeled placeholder concepts (`PlaceholderAiImageRepository`) | Provision Firebase AI Logic + App Check + per-user daily caps |
-| **Visual Captures** | 12-screen UI Showcase + 6 bundled drawables verified in repo | Capture live phone screenshots after APK install and place in `docs/screenshots/` |
-| **GitHub Actions CI** | Workflow YAML prepared with JDK 21 + Gradle 9.3.1 + keystore decode | Verify first live cloud build run after pushing to GitHub |
+| **Visual Captures** | 6 bundled brand & studio drawables verified in repo | Capture live phone screenshots after APK install and place in `docs/screenshots/` |
+| **GitHub Actions CI** | Hardened workflow with JDK 21, SDK 36.1, Gradle 9.3.1, Robolectric mirror & APK signature check | Verify green checkmark on the next GitHub push |
 
 ---
 
-## 16. Documentation Map
+## <img src="https://api.iconify.design/lucide/book-open.svg?color=%23AD853C" width="20" height="20" alt="" /> 16. Documentation Map
 
 | Document | Description |
 | :--- | :--- |
 | [`README.md`](README.md) | Master project overview, architecture, setup, APK build & attribution |
+| [`ANTIGRAVITY_APK_BUILD.md`](ANTIGRAVITY_APK_BUILD.md) | Autonomous Windows PowerShell runbook for Antigravity agent APK builds |
 | [`LICENSE`](LICENSE) | MIT open-source license terms |
-| [`Docs/backend_prd.md`](Docs/backend_prd.md) | Backend architecture PRD, Customer vs. Admin separation, portable SQL schema & API contracts |
-| [`Docs/hosting_guide.md`](Docs/hosting_guide.md) | Free testing stacks (Firebase / Supabase / Vercel) vs. paid production hosting (Hostinger VPS / Pro tiers) |
+| [`docs/backend_prd.md`](docs/backend_prd.md) | Backend architecture PRD, Customer vs. Admin separation, portable SQL schema & API contracts |
+| [`docs/hosting_guide.md`](docs/hosting_guide.md) | Free testing stacks (Firebase / Supabase / Vercel) vs. paid production hosting (Hostinger VPS / Pro tiers) |
 | [`docs/backend/INDEX.md`](docs/backend/INDEX.md) | Deep-dive backend documentation index |
 | [`docs/backend/BACKEND_PRD.md`](docs/backend/BACKEND_PRD.md) | Extended product requirements, user roles & phased roadmap |
 | [`docs/backend/HOSTING_AND_COST_COMPARISON.md`](docs/backend/HOSTING_AND_COST_COMPARISON.md) | Detailed INR/USD cost breakdown & third-party India launch fees |
@@ -451,7 +449,7 @@ When moving from the offline Room demo to live Firebase cloud sync or Gemini AI 
 
 ---
 
-## 17. License & Public Repository Hygiene
+## <img src="https://api.iconify.design/lucide/scale.svg?color=%23AD853C" width="20" height="20" alt="" /> 17. License & Public Repository Hygiene
 
 This project is distributed under the **MIT License**. See [`LICENSE`](LICENSE) for full terms.
 
@@ -460,7 +458,7 @@ This project is distributed under the **MIT License**. See [`LICENSE`](LICENSE) 
 
 ---
 
-## 18. Contributors, Founder & Ecosystem Attribution
+## <img src="https://api.iconify.design/lucide/users.svg?color=%23AD853C" width="20" height="20" alt="" /> 18. Contributors, Founder & Ecosystem Attribution
 
 ### Contributors
 
@@ -472,21 +470,21 @@ This project is distributed under the **MIT License**. See [`LICENSE`](LICENSE) 
 
 | Channel | Official Link |
 | :--- | :--- |
-| Portfolio | [pranav005-portfolio.netlify.app](https://pranav005-portfolio.netlify.app/) |
-| HexAtom Showcase | [hexatom.imaginefuture1-7.workers.dev](https://hexatom.imaginefuture1-7.workers.dev/) |
-| LinkedIn | [linkedin.com/in/pranav-sahu-bb86b8234](https://www.linkedin.com/in/pranav-sahu-bb86b8234/) |
-| Devpost | [devpost.com/pranavsahu005](https://devpost.com/pranavsahu005) |
-| Instagram | [@the_future_of_explainer](https://www.instagram.com/the_future_of_explainer/) |
-| Facebook | [facebook.com/profile.php?id=100078424104712](https://www.facebook.com/profile.php?id=100078424104712) |
+| <img src="https://api.iconify.design/lucide/globe.svg?color=%23AD853C" width="15" height="15" alt="" /> Portfolio | [pranav005-portfolio.netlify.app](https://pranav005-portfolio.netlify.app/) |
+| <img src="https://api.iconify.design/lucide/sparkles.svg?color=%23AD853C" width="15" height="15" alt="" /> HexAtom Showcase | [hexatom.imaginefuture1-7.workers.dev](https://hexatom.imaginefuture1-7.workers.dev/) |
+| <img src="https://api.iconify.design/lucide/linkedin.svg?color=%23AD853C" width="15" height="15" alt="" /> LinkedIn | [linkedin.com/in/pranav-sahu-bb86b8234](https://www.linkedin.com/in/pranav-sahu-bb86b8234/) |
+| <img src="https://api.iconify.design/lucide/code-2.svg?color=%23AD853C" width="15" height="15" alt="" /> Devpost | [devpost.com/pranavsahu005](https://devpost.com/pranavsahu005) |
+| <img src="https://api.iconify.design/lucide/instagram.svg?color=%23AD853C" width="15" height="15" alt="" /> Instagram | [@the_future_of_explainer](https://www.instagram.com/the_future_of_explainer/) |
+| <img src="https://api.iconify.design/lucide/facebook.svg?color=%23AD853C" width="15" height="15" alt="" /> Facebook | [facebook.com/profile.php?id=100078424104712](https://www.facebook.com/profile.php?id=100078424104712) |
 
 ### Wear Tome — Official Channels
 
 | Channel | Official Link |
 | :--- | :--- |
-| Website | [weartome.in](https://weartome.in) |
-| Instagram | [@wear_tome](https://www.instagram.com/wear_tome/) |
-| Facebook | [facebook.com/profile.php?id=100091375722751](https://www.facebook.com/profile.php?id=100091375722751) |
-| Pinterest | [in.pinterest.com/weartome](https://in.pinterest.com/weartome/) |
+| <img src="https://api.iconify.design/lucide/globe.svg?color=%23AD853C" width="15" height="15" alt="" /> Website | [weartome.in](https://weartome.in) |
+| <img src="https://api.iconify.design/lucide/instagram.svg?color=%23AD853C" width="15" height="15" alt="" /> Instagram | [@wear_tome](https://www.instagram.com/wear_tome/) |
+| <img src="https://api.iconify.design/lucide/facebook.svg?color=%23AD853C" width="15" height="15" alt="" /> Facebook | [facebook.com/profile.php?id=100091375722751](https://www.facebook.com/profile.php?id=100091375722751) |
+| <img src="https://api.iconify.design/lucide/bookmark.svg?color=%23AD853C" width="15" height="15" alt="" /> Pinterest | [in.pinterest.com/weartome](https://in.pinterest.com/weartome/) |
 
 ### Engineered & Curated by Pranav Raj Sahu — Hexatom Team / Aronar AI
 
@@ -517,6 +515,5 @@ This project is distributed under the **MIT License**. See [`LICENSE`](LICENSE) 
 
 <p align="center">
   Copyright &copy; 2026 Pranav Raj Sahu &middot; Hexatom Team / Aronar AI. All Rights Reserved.<br />
-  Licensed under the <a href="LICENSE">MIT License</a> &middot; Last updated: November 2026<br />
-  Built with Human Engineering + Google AI Studio, Gemini &amp; API Tooling.
+  Licensed under the <a href="LICENSE">MIT License</a> &middot; Last updated: November 2026
 </p>

@@ -24,6 +24,10 @@ on:
         default: "v1.0.0-demo"
         type: string
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: write
 
@@ -42,25 +46,75 @@ jobs:
           distribution: temurin
           java-version: "21"
 
-      - name: Accept Android SDK licenses and ensure SDK 36
+      - name: Accept Android SDK licenses and install SDK 36.1 + Build-Tools 36.0.0
+        shell: bash
         run: |
-          SDKMANAGER="${ANDROID_HOME:-$ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager"
-          if [ -x "$SDKMANAGER" ]; then
-            yes | "$SDKMANAGER" --licenses > /dev/null || true
-            "$SDKMANAGER" "platforms;android-36" "build-tools;36.0.0" || true
-            "$SDKMANAGER" "platforms;android-36.1" || true
+          set -euo pipefail
+          SDK_DIR="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/usr/local/lib/android/sdk}}"
+          echo "ANDROID_HOME=${SDK_DIR}" >> "$GITHUB_ENV"
+          echo "ANDROID_SDK_ROOT=${SDK_DIR}" >> "$GITHUB_ENV"
+
+          SDKMANAGER=""
+          if [ -x "${SDK_DIR}/cmdline-tools/latest/bin/sdkmanager" ]; then
+            SDKMANAGER="${SDK_DIR}/cmdline-tools/latest/bin/sdkmanager"
+          else
+            SDKMANAGER="$(find "${SDK_DIR}/cmdline-tools" -maxdepth 3 -type f -name sdkmanager 2>/dev/null | head -n 1 || true)"
           fi
+
+          if [ -z "$SDKMANAGER" ] || [ ! -x "$SDKMANAGER" ]; then
+            echo "ERROR: sdkmanager not found under ${SDK_DIR}"
+            ls -la "${SDK_DIR}" || true
+            exit 1
+          fi
+
+          echo "Using sdkmanager: ${SDKMANAGER}"
+          yes | "$SDKMANAGER" --sdk_root="${SDK_DIR}" --licenses > /dev/null 2>&1 || true
+
+          "$SDKMANAGER" --sdk_root="${SDK_DIR}" \
+            "platform-tools" \
+            "platforms;android-36" \
+            "platforms;android-36.1" \
+            "build-tools;36.0.0"
+
+          if [ ! -d "${SDK_DIR}/platforms/android-36.1" ]; then
+            echo "ERROR: Required Android platform android-36.1 was not installed."
+            ls -la "${SDK_DIR}/platforms" || true
+            exit 1
+          fi
+
+          echo "Verified Android SDK platforms:"
+          ls -la "${SDK_DIR}/platforms"
+          echo "Verified Android SDK build-tools:"
+          ls -la "${SDK_DIR}/build-tools"
 
       - name: Set up Gradle 9.3.1
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: "9.3.1"
 
-      - name: Prepare debug keystore
+      - name: Ensure gradlew permissions if wrapper script exists
+        shell: bash
         run: |
+          if [ -f ./gradlew ]; then
+            chmod +x ./gradlew
+          fi
+          gradle --version
+
+      - name: Cache Robolectric Android runtime JARs
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository/org/robolectric
+          key: robolectric-android-all-sdk36-v1
+          restore-keys: |
+            robolectric-android-all-
+
+      - name: Prepare and verify debug keystore
+        shell: bash
+        run: |
+          set -euo pipefail
           if [ ! -f debug.keystore ]; then
             if [ -f debug.keystore.base64 ]; then
-              base64 -d debug.keystore.base64 > debug.keystore
+              tr -d '\r\n' < debug.keystore.base64 | base64 -d > debug.keystore
               echo "Decoded debug.keystore from debug.keystore.base64"
             else
               keytool -genkeypair -v \
@@ -76,16 +130,38 @@ jobs:
             fi
           fi
 
+          test -s debug.keystore
+          keytool -list -keystore debug.keystore -storepass android -alias androiddebugkey
+
       - name: Run unit tests
-        run: gradle :app:testDebugUnitTest --stacktrace
+        shell: bash
+        run: |
+          gradle :app:testDebugUnitTest \
+            -Drobolectric.dependency.repo.url=https://maven-central.storage-download.googleapis.com/maven2 \
+            -Dorg.gradle.jvmargs="-Xmx3g -XX:MaxMetaspaceSize=1g -Dfile.encoding=UTF-8" \
+            --stacktrace
 
       - name: Build Debug APK
-        run: gradle :app:assembleDebug --stacktrace
-
-      - name: Package APK for download
+        shell: bash
         run: |
+          gradle :app:assembleDebug \
+            -Dorg.gradle.jvmargs="-Xmx3g -XX:MaxMetaspaceSize=1g -Dfile.encoding=UTF-8" \
+            --stacktrace
+
+      - name: Verify and package Debug APK
+        shell: bash
+        run: |
+          set -euo pipefail
+          APK_PATH="app/build/outputs/apk/debug/app-debug.apk"
+          if [ ! -s "$APK_PATH" ]; then
+            echo "ERROR: APK missing or empty at ${APK_PATH}"
+            exit 1
+          fi
+
+          keytool -printcert -jarfile "$APK_PATH" | head -n 20
+
           mkdir -p release-apk
-          cp app/build/outputs/apk/debug/app-debug.apk release-apk/Aurelia-Jewels-debug.apk
+          cp "$APK_PATH" release-apk/Aurelia-Jewels-debug.apk
           ls -lh release-apk/Aurelia-Jewels-debug.apk
 
       - name: Upload Debug APK Artifact

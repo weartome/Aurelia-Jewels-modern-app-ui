@@ -63,7 +63,24 @@ android {
     compose = true
     buildConfig = true
   }
-  testOptions { unitTests { isIncludeAndroidResources = true } }
+  testOptions {
+    unitTests {
+      isIncludeAndroidResources = true
+      all { test ->
+        listOf(
+          "robolectric.dependency.repo.url",
+          "robolectric.dependency.repo.id",
+          "robolectric.dependency.dir",
+          "robolectric.offline"
+        ).forEach { prop ->
+          val value = System.getProperty(prop)
+          if (!value.isNullOrBlank()) {
+            test.systemProperty(prop, value)
+          }
+        }
+      }
+    }
+  }
   dependenciesInfo {
     includeInApk = false
     includeInBundle = true
