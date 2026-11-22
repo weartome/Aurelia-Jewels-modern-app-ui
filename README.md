@@ -107,15 +107,25 @@ flowchart TD
 
 ## <img src="https://api.iconify.design/lucide/image.svg?color=%23AD853C" width="20" height="20" alt="" /> 3. Visual Showcase Gallery
 
-### 3.1 Luxury UI Design Showcase
+### 3.1 Real Rendered App UI Showcase
 
-> *Transparency note: The showcase below presents the core Aurelia Jewels design system across Splash, Home Discovery, Luxury Collection Grid, Product Detail, and the separated Admin Dashboard. Live physical-device captures can be added to [`docs/screenshots/`](docs/screenshots/README.md) after installing the APK on an Android phone.*
+> *All previews below are real Jetpack Compose renders captured directly from this repository's UI code (`AppScreenshotCaptureTest.kt` via Robolectric Native Graphics) using the actual `AureliaJewelsTheme`, bundled fonts, Room seed catalogue, and studio photography.*
 
 <p align="center">
-  <img src="docs/screenshots/aurelia-app-showcase.jpg" alt="Aurelia Jewels Luxury App UI Showcase" width="100%" />
+  <img src="docs/screenshots/aurelia-app-showcase.png" alt="Aurelia Jewels Real App UI Showcase — Splash, Home, Luxury Grid, Product Detail, Admin Dashboard" width="100%" />
 </p>
 
-### 3.2 Bundled In-App Studio Photography & Brand Assets
+### 3.2 Screen-by-Screen Real App Previews
+
+| Splash Screen | Home Discovery & Bridal Hero | Best Offer VIP Box & Festive Sale | Luxury Jewellery Grid |
+| :---: | :---: | :---: | :---: |
+| <img src="docs/screenshots/01-splash.png" alt="Aurelia Jewels Splash Screen" width="210" /> | <img src="docs/screenshots/02-home.png" alt="Aurelia Jewels Home Screen" width="210" /> | <img src="docs/screenshots/03-home-offers.png" alt="Best Offer VIP Box and Festive Sale Picks" width="210" /> | <img src="docs/screenshots/04-luxury-grid.png" alt="Luxury Jewellery Filterable Grid" width="210" /> |
+
+| Product Detail & HD View | Shopping Bag & AURELIA10 Promo | Separated Admin Dashboard |
+| :---: | :---: | :---: |
+| <img src="docs/screenshots/05-product-detail.png" alt="Floral Gold Ring Product Detail Screen" width="220" /> | <img src="docs/screenshots/06-shopping-bag.png" alt="Shopping Bag with AURELIA10 Discount" width="220" /> | <img src="docs/screenshots/07-admin-dashboard.png" alt="Separated Admin Operations Dashboard" width="220" /> |
+
+### 3.3 Bundled In-App Studio Photography & Brand Assets
 
 All 6 visual assets below are bundled inside `app/src/main/res/drawable/` and rendered live inside the application with photographic metal-finish grading:
 
@@ -312,8 +322,15 @@ flowchart LR
 │   ├── CLIENT_HANDOFF.md                  # Non-developer APK export & client delivery guide
 │   ├── backend/                           # Deep-dive backend pack (INDEX, PRD, Hosting, Admin, API/DB)
 │   └── screenshots/
-│       ├── aurelia-app-showcase.jpg       # 5-screen editorial app UI showcase banner
-│       └── README.md                      # Guide for adding live device screenshots
+│       ├── aurelia-app-showcase.png       # 5-screen composite real Compose UI showcase banner
+│       ├── 01-splash.png                  # Real rendered Splash screen
+│       ├── 02-home.png                    # Real rendered Home & Bridal Hero screen
+│       ├── 03-home-offers.png             # Real rendered Best Offer VIP Box & Festive Sale
+│       ├── 04-luxury-grid.png             # Real rendered Luxury Jewellery Grid screen
+│       ├── 05-product-detail.png          # Real rendered Product Detail screen
+│       ├── 06-shopping-bag.png            # Real rendered Shopping Bag & AURELIA10 promo
+│       ├── 07-admin-dashboard.png         # Real rendered Separated Admin Dashboard
+│       └── README.md                      # Guide for regenerating or updating screenshots
 ├── app/
 │   ├── build.gradle.kts                   # Module build config, dependencies & signingConfigs
 │   └── src/
@@ -338,6 +355,7 @@ flowchart LR
 │       │       ├── font/                  # Cormorant Garamond & DM Sans (.ttf)
 │       │       └── values/                # strings.xml, colors.xml, themes.xml
 │       └── test/java/com/example/
+│           ├── AppScreenshotCaptureTest.kt # Robolectric native-graphics Compose UI verification & capture
 │           ├── AureliaCommerceRulesTest.kt # 8 verified JVM unit tests
 │           ├── ExampleRobolectricTest.kt   # Robolectric Android resource verification test
 │           └── ExampleUnitTest.kt          # Baseline JVM unit test
@@ -436,7 +454,7 @@ When moving from the offline Room demo to live Firebase cloud sync or Gemini AI 
 | **Admin Separation** | Isolated in-app `AdminDashboardScreen` for demo review | Disable demo admin flag in Play Store builds; deploy standalone web admin portal |
 | **Gold Rates** | Illustrative static demo reference figures | Connect Admin-updated `gold_rates` table or licensed bullion API |
 | **Bespoke AI Studio** | Clearly labeled placeholder concepts (`PlaceholderAiImageRepository`) | Provision Firebase AI Logic + App Check + per-user daily caps |
-| **Visual Captures** | 5-screen App UI Showcase + 6 bundled brand & studio drawables verified in repo | Capture live phone screenshots after APK install and place in `docs/screenshots/` |
+| **Visual Captures** | Real Robolectric Compose renders (7 individual screens + 5-screen showcase banner) + 6 bundled brand & studio drawables verified in repo | Optional physical-device captures after APK install on real hardware |
 | **GitHub Actions CI** | Hardened workflow with JDK 21, SDK 36.1, Gradle 9.3.1, Robolectric mirror & APK signature check | Verify green checkmark on the next GitHub push |
 
 ---

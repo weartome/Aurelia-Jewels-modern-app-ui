@@ -1,19 +1,26 @@
-# Device Screenshots Directory
+# App Preview Screenshots Directory
 
-The main `README.md` displays the **Aurelia Jewels App UI Showcase** (`docs/screenshots/aurelia-app-showcase.jpg`) and the 6 bundled brand and studio jewellery photography assets from `app/src/main/res/drawable/`.
+This folder stores the real Jetpack Compose screenshots displayed in the root `README.md`.
 
-Once you install `Aurelia-Jewels-debug.apk` on a physical Android phone, drop real device screenshots into this folder using these recommended filenames:
+## Included Files
 
-- `01-home.png` -- Home screen with Bridal Hero banner and categories
-- `02-luxury-grid.png` -- Luxury Jewellery Grid with wishlist hearts
-- `03-filter-sheet.png` -- Filter and Sort bottom sheet (Category, Material, Price Range)
-- `04-product-detail.png` -- Product detail page with size selector and CTA
-- `05-wishlist-and-bag.png` -- Saved wishlist and Shopping Bag with INR breakdown
-- `06-checkout-and-orders.png` -- 3-step guest checkout and Order Tracking
-- `07-design-studio.png` -- Admin Design Studio and Bespoke AI Concept Studio
+- `aurelia-app-showcase.png` (and `aurelia-app-showcase.jpg`) -- 5-screen panoramic showcase composited from the real rendered app screens below
+- `01-splash.png` -- Branded Deep Forest Olive Splash screen with lotus monogram emblem
+- `02-home.png` -- Home Discovery screen with Bridal Hero Carousel, Quick Pills, Trust Strip, and Best Offer VIP Box
+- `03-home-offers.png` -- Best Offer VIP Box with metallic Gold Foil Crown "CLAIM OFFER" button and Festive Sale Picks
+- `04-luxury-grid.png` -- Luxury Jewellery Grid with metal/saved chips, sort/filter controls, purity badges, and wishlist hearts
+- `05-product-detail.png` -- Product Detail screen for Floral Gold Ring with HD gallery, metal finish, ring sizes, and sticky CTAs
+- `06-shopping-bag.png` -- Shopping Bag with quantity steppers, applied `AURELIA10` privilege code, and INR breakdown
+- `07-admin-dashboard.png` -- Separated Admin Operations Console with Order Management KPIs and 1-tap Advance Stage action
 
-After adding PNG or JPG files here, embed them in `README.md` using standard relative Markdown links:
+## Regenerating Screenshots After UI Changes
 
-```markdown
-![Home Screen](docs/screenshots/01-home.png)
+Run the Robolectric Native Graphics capture test from the repository root:
+
+```bash
+CAPTURE_SCREENSHOTS=1 gradle :app:testDebugUnitTest \
+  --tests "com.example.AppScreenshotCaptureTest" \
+  -Drobolectric.dependency.repo.url=https://maven-central.storage-download.googleapis.com/maven2
 ```
+
+Normal unit test runs (`gradle :app:testDebugUnitTest`) verify that all screens render cleanly without modifying files in this directory.

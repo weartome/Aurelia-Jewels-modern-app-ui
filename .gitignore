@@ -48,7 +48,6 @@ app/google-services.json
 .aistudio/
 .build-outputs/
 public/assets/aistudio/*
-!public/assets/aistudio/Aurelia_Jewels_Luxury_App_Showcase_a3e5fbb6.png
 
 # IntelliJ / Android Studio IDE files
 *.iml
